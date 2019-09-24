@@ -1,0 +1,2 @@
+# TKCrashNilSafe
+处理NSArray,NSDictionary空值引起的奔溃问题
