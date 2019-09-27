@@ -7,17 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046A817C233DE383004E6A90 /* NullSafe-2.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = 046A8173233DE383004E6A90 /* NullSafe-2.0.zip */; };
+		046A817D233DE383004E6A90 /* 全局防崩溃.zip in Resources */ = {isa = PBXBuildFile; fileRef = 046A8174233DE383004E6A90 /* 全局防崩溃.zip */; };
+		046A8183233DE425004E6A90 /* NSNull+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A8182233DE425004E6A90 /* NSNull+CrashNilSafe.m */; };
+		046A8186233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A8185233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.m */; };
+		046A8189233DE62F004E6A90 /* NSArray+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A8188233DE62F004E6A90 /* NSArray+CrashNilSafe.m */; };
+		046A818C233DE78B004E6A90 /* NSObject+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A818B233DE78B004E6A90 /* NSObject+CrashNilSafe.m */; };
 		04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D1BD202339AFF2004D9BF8 /* AppDelegate.m */; };
 		04D1BD242339AFF2004D9BF8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D1BD232339AFF2004D9BF8 /* ViewController.m */; };
 		04D1BD272339AFF2004D9BF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD252339AFF2004D9BF8 /* Main.storyboard */; };
 		04D1BD292339AFF3004D9BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD282339AFF3004D9BF8 /* Assets.xcassets */; };
 		04D1BD2C2339AFF3004D9BF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD2A2339AFF3004D9BF8 /* LaunchScreen.storyboard */; };
 		04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D1BD2E2339AFF3004D9BF8 /* main.m */; };
-		04D1BD392339B04D004D9BF8 /* NullSafe-2.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD372339B04D004D9BF8 /* NullSafe-2.0.zip */; };
-		04D1BD3A2339B04D004D9BF8 /* 全局防崩溃.zip in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD382339B04D004D9BF8 /* 全局防崩溃.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		046A8173233DE383004E6A90 /* NullSafe-2.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "NullSafe-2.0.zip"; sourceTree = "<group>"; };
+		046A8174233DE383004E6A90 /* 全局防崩溃.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "全局防崩溃.zip"; sourceTree = "<group>"; };
+		046A8181233DE425004E6A90 /* NSNull+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNull+CrashNilSafe.h"; sourceTree = "<group>"; };
+		046A8182233DE425004E6A90 /* NSNull+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNull+CrashNilSafe.m"; sourceTree = "<group>"; };
+		046A8184233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+CrashNilSafe.h"; sourceTree = "<group>"; };
+		046A8185233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+CrashNilSafe.m"; sourceTree = "<group>"; };
+		046A8187233DE62F004E6A90 /* NSArray+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+CrashNilSafe.h"; sourceTree = "<group>"; };
+		046A8188233DE62F004E6A90 /* NSArray+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CrashNilSafe.m"; sourceTree = "<group>"; };
+		046A818A233DE78B004E6A90 /* NSObject+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+CrashNilSafe.h"; sourceTree = "<group>"; };
+		046A818B233DE78B004E6A90 /* NSObject+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CrashNilSafe.m"; sourceTree = "<group>"; };
 		04D1BD1C2339AFF2004D9BF8 /* NilSafeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NilSafeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D1BD1F2339AFF2004D9BF8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04D1BD202339AFF2004D9BF8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -28,8 +42,6 @@
 		04D1BD2B2339AFF3004D9BF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04D1BD2D2339AFF3004D9BF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04D1BD2E2339AFF3004D9BF8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		04D1BD372339B04D004D9BF8 /* NullSafe-2.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "NullSafe-2.0.zip"; sourceTree = "<group>"; };
-		04D1BD382339B04D004D9BF8 /* 全局防崩溃.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "全局防崩溃.zip"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,10 +55,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046A8171233DE383004E6A90 /* TKCrashNilSafe */ = {
+			isa = PBXGroup;
+			children = (
+				046A8172233DE383004E6A90 /* Demo */,
+				046A818A233DE78B004E6A90 /* NSObject+CrashNilSafe.h */,
+				046A818B233DE78B004E6A90 /* NSObject+CrashNilSafe.m */,
+				046A8184233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.h */,
+				046A8185233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.m */,
+				046A8187233DE62F004E6A90 /* NSArray+CrashNilSafe.h */,
+				046A8188233DE62F004E6A90 /* NSArray+CrashNilSafe.m */,
+				046A8181233DE425004E6A90 /* NSNull+CrashNilSafe.h */,
+				046A8182233DE425004E6A90 /* NSNull+CrashNilSafe.m */,
+			);
+			path = TKCrashNilSafe;
+			sourceTree = SOURCE_ROOT;
+		};
+		046A8172233DE383004E6A90 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				046A8173233DE383004E6A90 /* NullSafe-2.0.zip */,
+				046A8174233DE383004E6A90 /* 全局防崩溃.zip */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		04D1BD132339AFF2004D9BF8 = {
 			isa = PBXGroup;
 			children = (
-				04D1BD352339B04D004D9BF8 /* TKCrashNilSafe */,
 				04D1BD1E2339AFF2004D9BF8 /* NilSafeTest */,
 				04D1BD1D2339AFF2004D9BF8 /* Products */,
 			);
@@ -63,6 +99,7 @@
 		04D1BD1E2339AFF2004D9BF8 /* NilSafeTest */ = {
 			isa = PBXGroup;
 			children = (
+				046A8171233DE383004E6A90 /* TKCrashNilSafe */,
 				04D1BD1F2339AFF2004D9BF8 /* AppDelegate.h */,
 				04D1BD202339AFF2004D9BF8 /* AppDelegate.m */,
 				04D1BD222339AFF2004D9BF8 /* ViewController.h */,
@@ -74,23 +111,6 @@
 				04D1BD2E2339AFF3004D9BF8 /* main.m */,
 			);
 			path = NilSafeTest;
-			sourceTree = "<group>";
-		};
-		04D1BD352339B04D004D9BF8 /* TKCrashNilSafe */ = {
-			isa = PBXGroup;
-			children = (
-				04D1BD362339B04D004D9BF8 /* Demo */,
-			);
-			path = TKCrashNilSafe;
-			sourceTree = "<group>";
-		};
-		04D1BD362339B04D004D9BF8 /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				04D1BD372339B04D004D9BF8 /* NullSafe-2.0.zip */,
-				04D1BD382339B04D004D9BF8 /* 全局防崩溃.zip */,
-			);
-			path = Demo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +170,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D1BD392339B04D004D9BF8 /* NullSafe-2.0.zip in Resources */,
+				046A817C233DE383004E6A90 /* NullSafe-2.0.zip in Resources */,
 				04D1BD2C2339AFF3004D9BF8 /* LaunchScreen.storyboard in Resources */,
-				04D1BD3A2339B04D004D9BF8 /* 全局防崩溃.zip in Resources */,
+				046A817D233DE383004E6A90 /* 全局防崩溃.zip in Resources */,
 				04D1BD292339AFF3004D9BF8 /* Assets.xcassets in Resources */,
 				04D1BD272339AFF2004D9BF8 /* Main.storyboard in Resources */,
 			);
@@ -167,7 +187,11 @@
 			files = (
 				04D1BD242339AFF2004D9BF8 /* ViewController.m in Sources */,
 				04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */,
+				046A8186233DE4E7004E6A90 /* NSDictionary+CrashNilSafe.m in Sources */,
+				046A818C233DE78B004E6A90 /* NSObject+CrashNilSafe.m in Sources */,
 				04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */,
+				046A8183233DE425004E6A90 /* NSNull+CrashNilSafe.m in Sources */,
+				046A8189233DE62F004E6A90 /* NSArray+CrashNilSafe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
