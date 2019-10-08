@@ -22,10 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface NSMutableArray (CrashNilSafe)
-/**
- 插入数据：验证nil空值，和是否越界
- **/
-- (void)insertObjectVerify:(id)anObject atIndex:(NSUInteger)index;
+///**
+// 插入数据：验证nil空值，和是否越界
+// **/
+//- (void)insertObjectVerify:(id)anObject atIndex:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TestViewController.h
 //  NilSafeTest
 //
 //  Created by mac on 2019/9/24.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface TestViewController : UIViewController
 
 
 @end
