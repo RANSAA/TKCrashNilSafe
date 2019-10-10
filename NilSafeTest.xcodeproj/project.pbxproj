@@ -63,8 +63,8 @@
 		048558D3234F2E9700C84640 /* Array */ = {
 			isa = PBXGroup;
 			children = (
-				048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */,
 				048558D5234F2E9700C84640 /* NSArray+CrashNilSafe.h */,
+				048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */,
 			);
 			path = Array;
 			sourceTree = "<group>";
@@ -81,8 +81,8 @@
 		048558D9234F2E9700C84640 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
-				048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */,
 				048558DB234F2E9700C84640 /* NSDictionary+CrashNilSafe.h */,
+				048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */,
 			);
 			path = Dictionary;
 			sourceTree = "<group>";
