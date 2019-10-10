@@ -10,16 +10,13 @@
 #import <objc/runtime.h>
 
 
-
-
-#define crashNilSafeSeparatorWithFlag @"⚠️⚠️========================CrashNilSafe Log=========================="
-
+#define crashNilSafeSeparatorWithFlag @"========================CrashNilSafe Log=========================="
 
 
 
 @implementation NSObject (CrashNilSafe)
 
-#pragma mark 函数交换
+#pragma mark 函数交换模块
 /**
  交换两个函数
  **/
@@ -49,10 +46,7 @@
 }
 
 
-
 #pragma mark 捕获异常出现位置及其相关错误信息
-
-
 /**
  *  获取堆栈主要崩溃精简化的信息<根据正则表达式匹配出来>
  *  @param callStackSymbols 堆栈主要崩溃信息
@@ -97,38 +91,93 @@
 {
     NSString *crashInfoStr = nil;
     NSString *logErrorMessage = nil;
-    if (exception) {
-        //堆栈数据
-        NSArray *callStackSymbolsArr = [NSThread callStackSymbols];
 
-        //获取在哪个类的哪个方法中实例化的数组  字符串格式 -[类名 方法名]  或者 +[类名 方法名] （
-        //精简错误异常数据
-        NSString *mainCallStackSymbolMsg = [self getMainCallStackSymbolMessageWithCallStackSymbols:callStackSymbolsArr];
+    //堆栈数据
+    NSArray *callStackSymbolsArr = [NSThread callStackSymbols];
 
-        if (mainCallStackSymbolMsg == nil) {
-            mainCallStackSymbolMsg = [NSString stringWithFormat:@"%@",callStackSymbolsArr];
-            CrashNilSafeLog(@"崩溃方法定位失败,请您查看函数调用栈来排查错误原因");
-        }
-        NSString *errorName = exception.name;
-        NSString *errorReason = exception.reason;
-        //errorReason 可能为 -[__NSCFConstantString avoidCrashCharacterAtIndex:]: Range or index out of bounds
-        NSString *errorPlace = mainCallStackSymbolMsg;
+    //获取在哪个类的哪个方法中实例化的数组  字符串格式 -[类名 方法名]  或者 +[类名 方法名] （
+    //精简错误异常数据
+    NSString *mainCallStackSymbolMsg = [self getMainCallStackSymbolMessageWithCallStackSymbols:callStackSymbolsArr];
 
-        crashInfoStr = [NSString stringWithFormat:@"\n异常类型：\t\t%@\n出现异常的位置：\t%@\n精简的异常信息：\t%@\n错误提示：\t\t%@", errorName, errorPlace, errorReason, defaultToDo];
-    }else{
-        crashInfoStr = [NSString stringWithFormat:@"\n错误提示：\t\t%@", defaultToDo];
+    if (mainCallStackSymbolMsg == nil) {
+        mainCallStackSymbolMsg = [NSString stringWithFormat:@"%@",callStackSymbolsArr];
+        CrashNilSafeLog(@"崩溃方法定位失败,请您查看函数调用栈来排查错误原因");
     }
+    NSString *errorName = exception.name;
+    NSString *errorReason = exception.reason;
+    //errorReason 可能为 -[__NSCFConstantString avoidCrashCharacterAtIndex:]: Range or index out of bounds
+    NSString *errorPlace = mainCallStackSymbolMsg;
 
-    logErrorMessage = [NSString stringWithFormat:@"\n\n%@%@\n%@\n\n",crashNilSafeSeparatorWithFlag,crashInfoStr,crashNilSafeSeparatorWithFlag];
+    crashInfoStr = [NSString stringWithFormat:@"\n异常类型：\t\t%@\n出现异常的位置：\t%@\n精简的异常信息：\t%@\nDev错误提示：\t\t%@", errorName, errorPlace, errorReason, defaultToDo];
+
+
+    logErrorMessage = [NSString stringWithFormat:@"\n\n%@\n%@\n\n%@\n.\n",crashNilSafeSeparatorWithFlag,crashInfoStr,crashNilSafeSeparatorWithFlag];
     CrashNilSafeLog(@"%@",logErrorMessage);
 
     //CrashNilSafe 上报信息
     NSDictionary *crashInfo = @{@"crashInfo":crashInfoStr};
-//    将错误信息放在字典里，用通知的形式发送出去
+    //    将错误信息放在字典里，用通知的形式发送出去
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:CrashNilSafeNotification object:nil userInfo:crashInfo];
     });
 
 }
+
+#pragma mark load
++ (void)load
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        //交换KVO添加移出函数
+        [self tk_swizzleClassMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
+        [self tk_swizzleClassMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
+        [self tk_swizzleClassMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
+    });
+}
+
+#pragma mark KVO重复添加，删除奔溃异常处理，采用try-catch方式
+/**
+ *   优点:可以简单，直接的防止重复删除KVO监听键值的问题，而且该方法最安全，直接使用该方法
+ *   缺点:直接使用try catch，而且不能解决重复添加KVO监听的问题
+ **/
+
+// 交换后的方法
+- (void)tk_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
+{
+    @try {
+        [self tk_removeObserver:observer forKeyPath:keyPath];
+    } @catch (NSException *exception) {
+//        TKSDKLog(@"\n\n错误提示：%@\nNSException:%@\n",@"KVO重复移出引起的异常崩溃信息",exception);
+    } @finally {
+
+    }
+}
+
+// 交换后的方法
+- (void)tk_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context
+{
+    @try {
+        [self tk_removeObserver:observer forKeyPath:keyPath context:context];
+    } @catch (NSException *exception) {
+
+    } @finally {
+
+    }
+}
+
+// 交换后的方法
+- (void)tk_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+{
+    @try {
+        [self tk_addObserver:observer forKeyPath:keyPath options:options context:context];
+    } @catch (NSException *exception) {
+
+    } @finally {
+
+    }
+}
+
+
+
 
 @end

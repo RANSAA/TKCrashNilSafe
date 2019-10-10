@@ -27,8 +27,38 @@
 - (void)testDic
 {
     NSString *v = nil;
-    NSMutableDictionary *dic = @{@"key":v}.mutableCopy;
+    NSString *k = nil;
+    NSMutableDictionary *dic = @{@"keyTest":v,
+                                 @"test2":v,
+                                 @"key":@""
+                                 }.mutableCopy;
     NSLog(@"dic:%@",dic);
+
+    [dic setValue:@"key" forKey:v];
+    [dic setValue:@"key" forKey:@"view3232"];
+    [dic setValue:@"key" forKey:@"2"];
+    [dic setValue:v forKey:@"key"];
+    [dic setValue:@"v" forKey:@"key"];
+    [dic setValue:@"test2" forKey:@"view"];
+    [dic setValue:@"test2" forKey:v];
+    [dic setValue:k forKey:v];
+    [dic setValue:k forKey:@"view"];
+
+
+    [dic setObject:@"key" forKey:v];
+    [dic setObject:@"key" forKey:@"view3232"];
+    [dic setObject:@"key" forKey:@"2"];
+    [dic setObject:v forKey:@"key"];
+    [dic setObject:@"v" forKey:@"key"];
+    [dic setObject:@"test2" forKey:@"view"];
+    [dic setObject:@"test2" forKey:v];
+    [dic setObject:k forKey:v];
+    [dic setObject:k forKey:@"view"];
+
+
+    [dic addEntriesFromDictionary:@{@"11":@"222"}];
+    NSLog(@"dic:%@",dic);
+
 }
 
 - (void)testAry
@@ -44,23 +74,28 @@
     NSLog(@"ary:%@",ary);
 
     NSMutableArray *mAry = nil;
-    mAry = @[@"111",item].mutableCopy;
+    mAry = @[@"111",item,@"222",@"3333",item,item].mutableCopy;
     mAry = [NSMutableArray arrayWithObject:item];
     mAry = @[].mutableCopy;
     mAry = [NSMutableArray arrayWithArray:arySub];
     mAry = [[NSMutableArray alloc] initWithArray:arySub];
     mAry = [[NSMutableArray alloc] initWithArray:arySub copyItems:YES];
 
+
     [mAry addObject:@"111"];
     mAry = [NSMutableArray arrayWithCapacity:50];
-    [mAry insertObject:nil atIndex:1];
+    [mAry insertObject:@"null" atIndex:11];
     [mAry objectAtIndex:6];
     [mAry lastObject];
     [mAry firstObject];
     [mAry addObjectsFromArray:arySub];
     [mAry objectAtIndexedSubscript:7];
 
+
+
     NSLog(@"mAry:%@",mAry);
+
+   
 }
 
 @end
