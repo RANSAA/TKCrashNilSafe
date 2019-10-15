@@ -21,10 +21,10 @@ Pod::Spec.new do |spec|
   spec.description  = <<-DESC
   TKCrashNilSafe
                    DESC
-  spec.homepage     = "https://github.com/RANSAA/TKPermissionKit"   #github项目首页
+  spec.homepage     = "https://github.com/RANSAA/TKCrashNilSafe"   #github项目首页
   spec.license      = "MIT"     #开源协议方式
   spec.author             = { "sayaDev" => "1352892108@qq.com" }    #作者
-  spec.source       = { :git => "https://github.com/RANSAA/TKPermissionKit.git", :tag => "v#{spec.version}" } #对应github资源与版本
+  spec.source       = { :git => "https://github.com/RANSAA/TKCrashNilSafe.git", :tag => "v#{spec.version}" } #对应github资源与版本
   spec.requires_arc = true    #支持arc
 
   # spec.platform     = :ios
