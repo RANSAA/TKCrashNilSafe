@@ -95,6 +95,7 @@ Pod::Spec.new do |spec|
 
 
 
+  # spec.xcconfig = { "OTHER_LINKER_FLAGS" => "-force_load $(PODS_ROOT)/TKCrashNilSafe/TKCrashNilSafe" }
 
 
 
