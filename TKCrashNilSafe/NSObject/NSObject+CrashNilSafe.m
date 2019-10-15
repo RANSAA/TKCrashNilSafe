@@ -22,22 +22,21 @@
  **/
 + (BOOL)tk_swizzleMethod:(SEL)origSel withMethod:(SEL)altSel
 {
-    Class anClass = [self class];
-    Method origMethod = class_getInstanceMethod(anClass, origSel);
-    Method altMethod = class_getInstanceMethod(anClass, altSel);
+    Method origMethod = class_getInstanceMethod(self, origSel);
+    Method altMethod = class_getInstanceMethod(self, altSel);
     if (!origMethod || !altMethod) {
         return NO;
     }
-    class_addMethod(anClass,
+    class_addMethod(self,
                     origSel,
-                    class_getMethodImplementation(anClass, origSel),
+                    class_getMethodImplementation(self, origSel),
                     method_getTypeEncoding(origMethod));
-    class_addMethod(anClass,
+    class_addMethod(self,
                     altSel,
-                    class_getMethodImplementation(anClass, altSel),
+                    class_getMethodImplementation(self, altSel),
                     method_getTypeEncoding(altMethod));
-    method_exchangeImplementations(class_getInstanceMethod(anClass, origSel),
-                                   class_getInstanceMethod(anClass, altSel));
+    method_exchangeImplementations(class_getInstanceMethod(self, origSel),
+                                   class_getInstanceMethod(self, altSel));
     return YES;
 }
 
@@ -46,15 +45,7 @@
  **/
 + (BOOL)tk_swizzleClassMethod:(SEL)origSel withMethod:(SEL)altSel
 {
-    Class anClass = object_getClass((id)self);
-    Method origMethod = class_getClassMethod(anClass, origSel);
-    Method altMethod = class_getClassMethod(anClass, altSel);
-    if (!origMethod || !altMethod) {
-        return NO;
-    }
-    method_exchangeImplementations(origMethod, altMethod);
-    return YES;
-//    return [object_getClass((id)self) tk_swizzleClassMethod:origSel withMethod:altSel];
+    return [object_getClass((id)self) tk_swizzleMethod:origSel withMethod:altSel];
 }
 
 
