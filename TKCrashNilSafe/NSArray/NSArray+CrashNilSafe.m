@@ -7,8 +7,6 @@
 //
 
 #import "NSArray+CrashNilSafe.h"
-#import "NSObject+CrashNilSafe.h"
-#import <objc/runtime.h>
 
 
 @implementation NSArray (CrashNilSafe)

@@ -7,9 +7,6 @@
 //
 
 #import "NSDictionary+CrashNilSafe.h"
-#import "NSObject+CrashNilSafe.h"
-#import <objc/runtime.h>
-
 
 
 @implementation NSDictionary (CrashNilSafe)
@@ -85,14 +82,11 @@
         [class tk_swizzleMethod:@selector(setObject:forKeyedSubscript:) withMethod:@selector(tk_setObject:forKeyedSubscript:)];
         [class tk_swizzleMethod:@selector(setValue:forKey:) withMethod:@selector(tk_setValue:forKey:)];
 //        [class tk_swizzleMethod:@selector(removeObjectForKey:) withMethod:@selector(tk_removeObjectForKey:)];
+
     });
 }
 
 - (void)tk_setObject:(id)anObject forKey:(id<NSCopying>)aKey {
-//    if (!aKey || !anObject) {
-//        return;
-//    }
-//    [self tk_setObject:anObject forKey:aKey];
     @try {
         [self tk_setObject:anObject forKey:aKey];
     } @catch (NSException *exception) {
@@ -104,10 +98,6 @@
 }
 
 - (void)tk_setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key {
-//    if (!key || !obj) {
-//        return;
-//    }
-//    [self tk_setObject:obj forKeyedSubscript:key];
     @try {
         [self tk_setObject:obj forKeyedSubscript:key];
     } @catch (NSException *exception) {

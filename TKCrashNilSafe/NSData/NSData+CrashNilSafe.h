@@ -1,20 +1,21 @@
 //
-//  NSDictionary+CrashNilSafe.h
+//  NSData+CrashNilSafe.h
 //  NilSafeTest
 //
-//  Created by mac on 2019/9/27.
+//  Created by mac on 2019/10/15.
 //  Copyright © 2019 mac. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "NSObject+CrashNilSafe.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSDictionary (CrashNilSafe)
+@interface NSData (CrashNilSafe)
 
 @end
 
-@interface NSMutableDictionary (CrashNilSafe)
+@interface NSMutableData (CrashNilSafe)
 
 @end
 

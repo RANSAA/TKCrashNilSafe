@@ -21,6 +21,7 @@
     // Do any additional setup after loading the view.
     [self testDic];
     [self testAry];
+//    [self testFuncation];
 }
 
 
@@ -94,8 +95,15 @@
 
 
     NSLog(@"mAry:%@",mAry);
-
    
 }
+
+- (void)testFuncation
+{
+    [self performSelector:@selector(carch:)];
+
+    
+}
+
 
 @end

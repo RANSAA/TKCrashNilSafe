@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,9 +26,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (CrashNilSafe)
 
-#pragma mark 函数交换
+#pragma mark 函数交换，注意这两个方法是相同的只是使用者不同
+/**
+ 交换对象中的方法
+ **/
 + (BOOL)tk_swizzleMethod:(SEL)origSel withMethod:(SEL)altSel;
+
+/**
+ 交换类中的方法
+ **/
 + (BOOL)tk_swizzleClassMethod:(SEL)origSel withMethod:(SEL)altSel;
+
+
 
 #pragma mark 捕获异常出现位置及其相关错误信息
 /**

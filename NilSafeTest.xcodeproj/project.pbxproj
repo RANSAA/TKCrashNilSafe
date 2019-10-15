@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04444BBB235569C800711375 /* NSString+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BBA235569C800711375 /* NSString+CrashNilSafe.m */; };
+		04444BBF235575AA00711375 /* NSAttributedString+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */; };
+		04444BC32355760900711375 /* NSSet+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BC22355760900711375 /* NSSet+CrashNilSafe.m */; };
+		04444BC72355785000711375 /* NSData+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BC62355785000711375 /* NSData+CrashNilSafe.m */; };
+		04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */; };
 		048558DC234F2E9800C84640 /* NSArray+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */; };
 		048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */; };
 		048558DE234F2E9800C84640 /* NSDictionary+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */; };
@@ -19,6 +24,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04444BB9235569C800711375 /* NSString+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+CrashNilSafe.h"; sourceTree = "<group>"; };
+		04444BBA235569C800711375 /* NSString+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+CrashNilSafe.m"; sourceTree = "<group>"; };
+		04444BBD235575AA00711375 /* NSAttributedString+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CrashNilSafe.h"; sourceTree = "<group>"; };
+		04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CrashNilSafe.m"; sourceTree = "<group>"; };
+		04444BC12355760900711375 /* NSSet+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSSet+CrashNilSafe.h"; sourceTree = "<group>"; };
+		04444BC22355760900711375 /* NSSet+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSSet+CrashNilSafe.m"; sourceTree = "<group>"; };
+		04444BC52355785000711375 /* NSData+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+CrashNilSafe.h"; sourceTree = "<group>"; };
+		04444BC62355785000711375 /* NSData+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+CrashNilSafe.m"; sourceTree = "<group>"; };
+		04444BC9235578B500711375 /* NSCache+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSCache+CrashNilSafe.h"; sourceTree = "<group>"; };
+		04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSCache+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558D2234F2E9700C84640 /* TKCrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCrashNilSafe.h; sourceTree = "<group>"; };
 		048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558D5234F2E9700C84640 /* NSArray+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CrashNilSafe.h"; sourceTree = "<group>"; };
@@ -49,42 +64,92 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04444BB52355694D00711375 /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				04444BB9235569C800711375 /* NSString+CrashNilSafe.h */,
+				04444BBA235569C800711375 /* NSString+CrashNilSafe.m */,
+			);
+			path = NSString;
+			sourceTree = "<group>";
+		};
+		04444BBC2355758700711375 /* NSAttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				04444BBD235575AA00711375 /* NSAttributedString+CrashNilSafe.h */,
+				04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */,
+			);
+			path = NSAttributedString;
+			sourceTree = "<group>";
+		};
+		04444BC0235575E700711375 /* NSSet */ = {
+			isa = PBXGroup;
+			children = (
+				04444BC12355760900711375 /* NSSet+CrashNilSafe.h */,
+				04444BC22355760900711375 /* NSSet+CrashNilSafe.m */,
+			);
+			path = NSSet;
+			sourceTree = "<group>";
+		};
+		04444BC42355783F00711375 /* NSData */ = {
+			isa = PBXGroup;
+			children = (
+				04444BC52355785000711375 /* NSData+CrashNilSafe.h */,
+				04444BC62355785000711375 /* NSData+CrashNilSafe.m */,
+			);
+			path = NSData;
+			sourceTree = "<group>";
+		};
+		04444BC82355788800711375 /* NSCache */ = {
+			isa = PBXGroup;
+			children = (
+				04444BC9235578B500711375 /* NSCache+CrashNilSafe.h */,
+				04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */,
+			);
+			path = NSCache;
+			sourceTree = "<group>";
+		};
 		048558D1234F2E9700C84640 /* TKCrashNilSafe */ = {
 			isa = PBXGroup;
 			children = (
+				048558D3234F2E9700C84640 /* NSArray */,
+				04444BBC2355758700711375 /* NSAttributedString */,
+				04444BC82355788800711375 /* NSCache */,
+				04444BC42355783F00711375 /* NSData */,
+				048558D9234F2E9700C84640 /* NSDictionary */,
+				048558D6234F2E9700C84640 /* NSObject */,
+				04444BC0235575E700711375 /* NSSet */,
+				04444BB52355694D00711375 /* NSString */,
 				048558D2234F2E9700C84640 /* TKCrashNilSafe.h */,
-				048558D3234F2E9700C84640 /* Array */,
-				048558D6234F2E9700C84640 /* Object */,
-				048558D9234F2E9700C84640 /* Dictionary */,
 			);
 			path = TKCrashNilSafe;
 			sourceTree = SOURCE_ROOT;
 		};
-		048558D3234F2E9700C84640 /* Array */ = {
+		048558D3234F2E9700C84640 /* NSArray */ = {
 			isa = PBXGroup;
 			children = (
 				048558D5234F2E9700C84640 /* NSArray+CrashNilSafe.h */,
 				048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */,
 			);
-			path = Array;
+			path = NSArray;
 			sourceTree = "<group>";
 		};
-		048558D6234F2E9700C84640 /* Object */ = {
+		048558D6234F2E9700C84640 /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
 				048558D7234F2E9700C84640 /* NSObject+CrashNilSafe.h */,
 				048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */,
 			);
-			path = Object;
+			path = NSObject;
 			sourceTree = "<group>";
 		};
-		048558D9234F2E9700C84640 /* Dictionary */ = {
+		048558D9234F2E9700C84640 /* NSDictionary */ = {
 			isa = PBXGroup;
 			children = (
 				048558DB234F2E9700C84640 /* NSDictionary+CrashNilSafe.h */,
 				048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */,
 			);
-			path = Dictionary;
+			path = NSDictionary;
 			sourceTree = "<group>";
 		};
 		04D1BD132339AFF2004D9BF8 = {
@@ -193,9 +258,14 @@
 				04D1BD242339AFF2004D9BF8 /* TestViewController.m in Sources */,
 				048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */,
 				04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */,
+				04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */,
 				04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */,
+				04444BBB235569C800711375 /* NSString+CrashNilSafe.m in Sources */,
 				048558DC234F2E9800C84640 /* NSArray+CrashNilSafe.m in Sources */,
+				04444BBF235575AA00711375 /* NSAttributedString+CrashNilSafe.m in Sources */,
 				048558DE234F2E9800C84640 /* NSDictionary+CrashNilSafe.m in Sources */,
+				04444BC32355760900711375 /* NSSet+CrashNilSafe.m in Sources */,
+				04444BC72355785000711375 /* NSData+CrashNilSafe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

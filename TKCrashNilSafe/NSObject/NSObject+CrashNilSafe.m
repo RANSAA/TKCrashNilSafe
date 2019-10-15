@@ -7,7 +7,6 @@
 //
 
 #import "NSObject+CrashNilSafe.h"
-#import <objc/runtime.h>
 
 
 #define crashNilSafeSeparatorWithFlag @"========================CrashNilSafe Log=========================="
@@ -16,33 +15,46 @@
 
 @implementation NSObject (CrashNilSafe)
 
-#pragma mark 函数交换模块
+#pragma mark 函数交换，注意这两个方法是相同的只是使用者不同
+
 /**
- 交换两个函数
+ 交换对象中的方法
  **/
 + (BOOL)tk_swizzleMethod:(SEL)origSel withMethod:(SEL)altSel
 {
-    Method origMethod = class_getInstanceMethod(self, origSel);
-    Method altMethod = class_getInstanceMethod(self, altSel);
+    Class anClass = [self class];
+    Method origMethod = class_getInstanceMethod(anClass, origSel);
+    Method altMethod = class_getInstanceMethod(anClass, altSel);
     if (!origMethod || !altMethod) {
         return NO;
     }
-    class_addMethod(self,
+    class_addMethod(anClass,
                     origSel,
-                    class_getMethodImplementation(self, origSel),
+                    class_getMethodImplementation(anClass, origSel),
                     method_getTypeEncoding(origMethod));
-    class_addMethod(self,
+    class_addMethod(anClass,
                     altSel,
-                    class_getMethodImplementation(self, altSel),
+                    class_getMethodImplementation(anClass, altSel),
                     method_getTypeEncoding(altMethod));
-    method_exchangeImplementations(class_getInstanceMethod(self, origSel),
-                                   class_getInstanceMethod(self, altSel));
+    method_exchangeImplementations(class_getInstanceMethod(anClass, origSel),
+                                   class_getInstanceMethod(anClass, altSel));
     return YES;
 }
 
+/**
+ 交换类中的方法
+ **/
 + (BOOL)tk_swizzleClassMethod:(SEL)origSel withMethod:(SEL)altSel
 {
-    return [object_getClass((id)self) tk_swizzleMethod:origSel withMethod:altSel];
+    Class anClass = object_getClass((id)self);
+    Method origMethod = class_getClassMethod(anClass, origSel);
+    Method altMethod = class_getClassMethod(anClass, altSel);
+    if (!origMethod || !altMethod) {
+        return NO;
+    }
+    method_exchangeImplementations(origMethod, altMethod);
+    return YES;
+//    return [object_getClass((id)self) tk_swizzleClassMethod:origSel withMethod:altSel];
 }
 
 
@@ -116,7 +128,7 @@
 
     //CrashNilSafe 上报信息
     NSDictionary *crashInfo = @{@"crashInfo":crashInfoStr};
-    //    将错误信息放在字典里，用通知的形式发送出去
+    //将错误信息放在字典里，用通知的形式发送出去
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:CrashNilSafeNotification object:nil userInfo:crashInfo];
     });
@@ -129,11 +141,15 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         //交换KVO添加移出函数
-        [self tk_swizzleClassMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
-        [self tk_swizzleClassMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
-        [self tk_swizzleClassMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
+        [self tk_swizzleMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
+        [self tk_swizzleMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
+        [self tk_swizzleMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
+
+        //交换performSelector:
+//        [self tk_swizzleMethod:@selector(performSelector:) withMethod:@selector(tk_performSelector:)];
     });
 }
+
 
 #pragma mark KVO重复添加，删除奔溃异常处理，采用try-catch方式
 /**
@@ -178,6 +194,7 @@
 }
 
 
+#pragma mark 处理performSelector：调用调用找不到方法时奔溃问题
 
 
 @end
