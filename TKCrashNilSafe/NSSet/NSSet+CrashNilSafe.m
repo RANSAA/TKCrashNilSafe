@@ -7,6 +7,8 @@
 //
 
 #import "NSSet+CrashNilSafe.h"
+#import <objc/runtime.h>
+
 
 @implementation NSSet (CrashNilSafe)
 

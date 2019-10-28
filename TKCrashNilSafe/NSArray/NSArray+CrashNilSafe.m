@@ -7,6 +7,7 @@
 //
 
 #import "NSArray+CrashNilSafe.h"
+#import <objc/runtime.h>
 
 
 @implementation NSArray (CrashNilSafe)
@@ -15,12 +16,11 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self tk_swizzleClassMethod:@selector(arrayWithObjects:count:) withMethod:@selector(tk_arrayWithObjects:count:)];
-        [objc_getClass("__NSPlaceholderArray") tk_swizzleMethod:@selector(initWithObjects:count:) withMethod:@selector(tk_initWithObjects:count:)];
+        [self tk_exchangeClassMethod:@selector(arrayWithObjects:count:) withMethod:@selector(tk_arrayWithObjects:count:)];
+        [objc_getClass("__NSPlaceholderArray") tk_exchangeMethod:@selector(initWithObjects:count:) withMethod:@selector(tk_initWithObjects:count:)];
 
-        [objc_getClass("__NSArrayM") tk_swizzleMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
-        [objc_getClass("__NSArrayM") tk_swizzleMethod:@selector(objectAtIndexedSubscript:) withMethod:@selector(tk_objectAtIndexedSubscript:)];
-
+        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
+        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(objectAtIndexedSubscript:) withMethod:@selector(tk_objectAtIndexedSubscript:)];
     });
 }
 
@@ -107,7 +107,7 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [objc_getClass("__NSArrayM") tk_swizzleMethod:@selector(insertObject:atIndex:) withMethod:@selector(tk_insertObject:atIndex:)];
+        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(insertObject:atIndex:) withMethod:@selector(tk_insertObject:atIndex:)];
     });
 }
 

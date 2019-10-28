@@ -7,6 +7,7 @@
 //
 
 #import "NSDictionary+CrashNilSafe.h"
+#import <objc/runtime.h>
 
 
 @implementation NSDictionary (CrashNilSafe)
@@ -14,8 +15,8 @@
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self tk_swizzleMethod:@selector(initWithObjects:forKeys:count:) withMethod:@selector(tk_initWithObjects:forKeys:count:)];
-        [self tk_swizzleClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withMethod:@selector(tk_dictionaryWithObjects:forKeys:count:)];
+        [self tk_exchangeMethod:@selector(initWithObjects:forKeys:count:) withMethod:@selector(tk_initWithObjects:forKeys:count:)];
+        [self tk_exchangeClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withMethod:@selector(tk_dictionaryWithObjects:forKeys:count:)];
     });
 }
 
@@ -78,11 +79,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = NSClassFromString(@"__NSDictionaryM");
-        [class tk_swizzleMethod:@selector(setObject:forKey:) withMethod:@selector(tk_setObject:forKey:)];
-        [class tk_swizzleMethod:@selector(setObject:forKeyedSubscript:) withMethod:@selector(tk_setObject:forKeyedSubscript:)];
-        [class tk_swizzleMethod:@selector(setValue:forKey:) withMethod:@selector(tk_setValue:forKey:)];
-//        [class tk_swizzleMethod:@selector(removeObjectForKey:) withMethod:@selector(tk_removeObjectForKey:)];
-
+        [class tk_exchangeMethod:@selector(setObject:forKey:) withMethod:@selector(tk_setObject:forKey:)];
+        [class tk_exchangeMethod:@selector(setObject:forKeyedSubscript:) withMethod:@selector(tk_setObject:forKeyedSubscript:)];
+        [class tk_exchangeMethod:@selector(setValue:forKey:) withMethod:@selector(tk_setValue:forKey:)];
     });
 }
 

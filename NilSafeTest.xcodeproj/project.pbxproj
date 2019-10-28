@@ -12,6 +12,7 @@
 		04444BC32355760900711375 /* NSSet+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BC22355760900711375 /* NSSet+CrashNilSafe.m */; };
 		04444BC72355785000711375 /* NSData+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BC62355785000711375 /* NSData+CrashNilSafe.m */; };
 		04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */; };
+		0481308C2366C00F008FECB4 /* VC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0481308B2366C00F008FECB4 /* VC2.m */; };
 		048558DC234F2E9800C84640 /* NSArray+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */; };
 		048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */; };
 		048558DE234F2E9800C84640 /* NSDictionary+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */; };
@@ -34,6 +35,8 @@
 		04444BC62355785000711375 /* NSData+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+CrashNilSafe.m"; sourceTree = "<group>"; };
 		04444BC9235578B500711375 /* NSCache+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSCache+CrashNilSafe.h"; sourceTree = "<group>"; };
 		04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSCache+CrashNilSafe.m"; sourceTree = "<group>"; };
+		0481308A2366C00F008FECB4 /* VC2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VC2.h; sourceTree = "<group>"; };
+		0481308B2366C00F008FECB4 /* VC2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VC2.m; sourceTree = "<group>"; };
 		048558D2234F2E9700C84640 /* TKCrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCrashNilSafe.h; sourceTree = "<group>"; };
 		048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558D5234F2E9700C84640 /* NSArray+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CrashNilSafe.h"; sourceTree = "<group>"; };
@@ -176,6 +179,8 @@
 				04D1BD202339AFF2004D9BF8 /* AppDelegate.m */,
 				04D1BD222339AFF2004D9BF8 /* TestViewController.h */,
 				04D1BD232339AFF2004D9BF8 /* TestViewController.m */,
+				0481308A2366C00F008FECB4 /* VC2.h */,
+				0481308B2366C00F008FECB4 /* VC2.m */,
 				04D1BD252339AFF2004D9BF8 /* Main.storyboard */,
 				04D1BD282339AFF3004D9BF8 /* Assets.xcassets */,
 				04D1BD2A2339AFF3004D9BF8 /* LaunchScreen.storyboard */,
@@ -258,6 +263,7 @@
 				04D1BD242339AFF2004D9BF8 /* TestViewController.m in Sources */,
 				048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */,
 				04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */,
+				0481308C2366C00F008FECB4 /* VC2.m in Sources */,
 				04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */,
 				04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */,
 				04444BBB235569C800711375 /* NSString+CrashNilSafe.m in Sources */,

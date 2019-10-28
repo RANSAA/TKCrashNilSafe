@@ -8,6 +8,9 @@
 
 #import "TestViewController.h"
 #import "NSArray+CrashNilSafe.h"
+#import <objc/runtime.h>
+
+
 
 
 @interface TestViewController ()
@@ -19,9 +22,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self testDic];
-    [self testAry];
-//    [self testFuncation];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifacuion:) name:kCrashNilSafeNotification object:nil];
+
+
+//    [self testDic];
+//    [self testAry];
+    [self testFuncation];
+
 }
 
 
@@ -100,10 +107,107 @@
 
 - (void)testFuncation
 {
+//    return;
     [self performSelector:@selector(carch:)];
 
-    
+//    [self removeObserver:self forKeyPath:@"er"];
+    [self addObserver:self forKeyPath:@"key" options:NSKeyValueObservingOptionNew context:@"context"];
+    [self addObserver:self forKeyPath:@"key" options:NSKeyValueObservingOptionNew context:@"123"];
+    [self addObserver:self forKeyPath:@"key" options:NSKeyValueObservingOptionNew context:nil];
+
+//    [self addObserver:self forKeyPath:@"df" options:NSKeyValueObservingOptionOld context:nil];
+//    [self addObserver:self.view forKeyPath:@"df" options:NSKeyValueObservingOptionNew context:nil];
+    NSArray *ary =[(id)self.observationInfo valueForKey:@"_observances"];
+    for (id info in ary) {
+        NSLog(@"class:%@    info:%@",[info class],info);
+        NSLog(@"observer:%@",[info valueForKey:@"_observer"]);
+        NSLog(@"keyPath:%@",[[info valueForKey:@"_property"] valueForKey:@"_keyPath"]);
+//        NSLog(@"options:%@",[info valueForKey:@"_context"]);
+
+//        NSLog(@"allKey:%@",(id)[info allKeys]);
+//        [info objectForKey:@"_context"];
+//        [info valueForKey:@"_originalObservable"]
+//        [self listWith:info];
+
+//        NSLog(@"print:%p",&self);
+//        NSLog(@"print:%p",self);
+//        NSLog(@"print:%@",self);
+    }
+//    NSLog(@"print:%p",&ary);
+//    NSLog(@"print:%p",ary);
+//     NSLog(@"print:%@",ary);
+
+//    id p1 = self;
+//    id p2 = self;
+//    NSLog(@"printp1:%p",&p1);
+//    NSLog(@"printp1:%p",p1);
+//    NSLog(@"printp1:%@",p1);
+//
+//    NSLog(@"printp1p2:%p",&p2);
+//    NSLog(@"printp1p2:%p",p2);
+//    NSLog(@"printp1p2:%@",p2);
 }
 
 
+- (void)notifacuion:(NSNotification *)notif
+{
+    NSLog(@"NSNotification:%@",notif.userInfo);
+}
+
+- (NSDictionary *)properties_aps
+
+{
+
+
+
+    NSMutableDictionary *props = [NSMutableDictionary dictionary];
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    for (i = 0; i<outCount; i++)
+    {
+        objc_property_t property = properties[i];
+        const char* char_f =property_getName(property);
+        NSString *propertyName = [NSString stringWithUTF8String:char_f];
+        id propertyValue = [self valueForKey:(NSString *)propertyName];
+        if (propertyValue) [props setObject:propertyValue forKey:propertyName];
+    }
+    free(properties);
+    return props;
+
+}
+
+- (void)listWith:(id)obj
+{
+    Class cls = [obj class];
+    NSMutableDictionary *props = [NSMutableDictionary dictionary];
+
+    unsigned int outCount, i;
+
+    objc_property_t *properties = class_copyPropertyList(cls, &outCount);
+
+    for (i = 0; i<outCount; i++)
+
+    {
+
+        objc_property_t property = properties[i];
+
+        const char* char_f =property_getName(property);
+
+        NSString *propertyName = [NSString stringWithUTF8String:char_f];
+
+        id propertyValue = [self valueForKey:(NSString *)propertyName];
+
+        if (propertyValue) [props setObject:propertyValue forKey:propertyName];
+
+    }
+
+    free(properties);
+
+    NSLog(@"props:%@",props);
+}
+
 @end
+
+
+
+

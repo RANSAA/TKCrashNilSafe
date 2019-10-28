@@ -7,6 +7,8 @@
 //
 
 #import "NSString+CrashNilSafe.h"
+#import <objc/runtime.h>
+
 
 @implementation NSString (CrashNilSafe)
 

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <objc/runtime.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,9 +18,18 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 /**
- 如果要收集异常日志，请监听该通知
+ 如果要收集异常日志，请监听该通知,提取（crashInfo）信息
  **/
-#define CrashNilSafeNotification  @"CrashNilSafeNotification"
+#define kCrashNilSafeNotification  @"kCrashNilSafeNotification"
+
+/**
+ KVO重复添加处理控制宏，可以根据需求设置对应模式
+ 0:不处理重复添加
+ 1:处理重复添加，只校验observer和keyPath --该项为默认
+ 2:处理重复添加，检查所有：observer，keyPath，options，context（手动管理KVO信息）
+ **/
+#define kCrashNilSafeCheckKVOAddType    1
+
 
 
 @interface NSObject (CrashNilSafe)
@@ -30,22 +38,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  交换对象中的方法
  **/
-+ (BOOL)tk_swizzleMethod:(SEL)origSel withMethod:(SEL)altSel;
++ (BOOL)tk_exchangeMethod:(SEL)origSel withMethod:(SEL)altSel;
 
 /**
  交换类中的方法
  **/
-+ (BOOL)tk_swizzleClassMethod:(SEL)origSel withMethod:(SEL)altSel;
++ (BOOL)tk_exchangeClassMethod:(SEL)origSel withMethod:(SEL)altSel;
 
 
 
 #pragma mark 捕获异常出现位置及其相关错误信息
-/**
- *  获取堆栈主要崩溃精简化的信息<根据正则表达式匹配出来>
- *  @param callStackSymbols 堆栈主要崩溃信息
- *  @return 堆栈主要崩溃精简化的信息
- */
-- (NSString *)getMainCallStackSymbolMessageWithCallStackSymbols:(NSArray<NSString *> *)callStackSymbols;
 /**
  *  提示崩溃的信息(控制台输出、通知)
  *  @param exception   捕获到的异常

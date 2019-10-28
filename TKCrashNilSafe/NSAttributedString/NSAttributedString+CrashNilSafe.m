@@ -7,6 +7,7 @@
 //
 
 #import "NSAttributedString+CrashNilSafe.h"
+#import <objc/runtime.h>
 
 
 @implementation NSAttributedString (CrashNilSafe)

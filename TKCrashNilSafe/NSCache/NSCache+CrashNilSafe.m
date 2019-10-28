@@ -7,6 +7,7 @@
 //
 
 #import "NSCache+CrashNilSafe.h"
+#import <objc/runtime.h>
 
 
 @implementation NSCache (CrashNilSafe)
