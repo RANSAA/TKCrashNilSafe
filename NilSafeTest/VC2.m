@@ -43,6 +43,9 @@
     [self removeObserver:self forKeyPath:@"VC2+2"];
 //    [self removeObserver:self forKeyPath:@"VC2+1"];
 //    [self removeObserver:self forKeyPath:@"VC2+2"];
+    [self removeObserver:self forKeyPath:@"VC2+2" context:@""];
+    [self removeObserver:self forKeyPath:@"VC2+2" context:@""];
+
 }
 
 @end

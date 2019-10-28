@@ -56,10 +56,11 @@
     NSString *des = [NSString stringWithFormat:@"observer:%@\tkeyPath:%@\toptions:%ld",self.observer,self.keyPath,self.options];
     return des;
 }
-- (void)dealloc
-{
-    NSLog(@"dealloc CrashNilSafeKVOCache");
-}
+
+//- (void)dealloc
+//{
+//    CrashNilSafeLog(@"dealloc CrashNilSafeKVOCache");
+//}
 
 @end
 
@@ -239,7 +240,6 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
         if (context) {
             cacheKey = [NSString stringWithFormat:@"%p+%@+%p",observer,keyPath,context];
         }
-        NSLog(@"cacheKey:%@ ",cacheKey);
         NSMutableDictionary *set = [self getCacheStrogeKVODict];
         CrashNilSafeKVOCache *obj = [[CrashNilSafeKVOCache alloc] init];
         obj.observer = [NSString stringWithFormat:@"%p",observer];
@@ -259,11 +259,9 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     }
 
 
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"kvo set after:%@",[self getCacheStrogeKVODict]);
-    });
-
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        NSLog(@"kvo set after:%@",[self getCacheStrogeKVODict]);
+//    });
 
     [self tk_addObserver:observer forKeyPath:keyPath options:options context:context];
 }
@@ -302,7 +300,6 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
         }
     }
 }
-
 
 
 

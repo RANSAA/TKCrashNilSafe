@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  1:处理重复添加，只校验observer和keyPath --该项为默认
  2:处理重复添加，检查所有：observer，keyPath，options，context（手动管理KVO信息）
  **/
-#define kCrashNilSafeCheckKVOAddType    1
+#define kCrashNilSafeCheckKVOAddType    2
 
 
 
