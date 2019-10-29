@@ -27,7 +27,8 @@
 
 //    [self testDic];
 //    [self testAry];
-    [self testFuncation];
+//    [self testFuncation];
+    [self testAttrStr];
 
 }
 
@@ -204,6 +205,24 @@
     free(properties);
 
     NSLog(@"props:%@",props);
+}
+
+- (void)testAttrStr
+{
+    NSAttributedString *atr = nil;
+    atr = [[NSAttributedString alloc] initWithString:@"1"];
+//    atr = [[NSAttributedString alloc] initWithAttributedString:atr];
+//    atr = [[NSAttributedString alloc] initWithString:@"2" attributes:nil];
+    NSLog(@"atr :%@",atr);
+
+    NSMutableAttributedString *at = nil;
+//    at = [[NSMutableAttributedString alloc] initWithString:nil];
+    at = [[NSMutableAttributedString alloc] initWithString:@"xxx" attributes:nil];
+//    at = [[NSMutableAttributedString alloc] initWithAttributedString:@""];
+    NSLog(@"at:%@",at);
+    [at replaceCharactersInRange:NSMakeRange(0, 3) withString:@"34547457457"];
+    NSLog(@"at:%@",at);
+
 }
 
 @end

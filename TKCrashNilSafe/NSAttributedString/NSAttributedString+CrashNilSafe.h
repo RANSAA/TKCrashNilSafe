@@ -6,6 +6,10 @@
 //  Copyright © 2019 mac. All rights reserved.
 //
 
+/**
+ 优化策略不是太好
+ **/
+
 #import <Foundation/Foundation.h>
 #import "NSObject+CrashNilSafe.h"
 

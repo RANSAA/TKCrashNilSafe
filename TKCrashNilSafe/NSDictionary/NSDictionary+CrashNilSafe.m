@@ -15,8 +15,8 @@
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self tk_exchangeMethod:@selector(initWithObjects:forKeys:count:) withMethod:@selector(tk_initWithObjects:forKeys:count:)];
-        [self tk_exchangeClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withMethod:@selector(tk_dictionaryWithObjects:forKeys:count:)];
+        [self TK_exchangeMethod:@selector(initWithObjects:forKeys:count:) withMethod:@selector(tk_initWithObjects:forKeys:count:)];
+        [self TK_exchangeClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withMethod:@selector(tk_dictionaryWithObjects:forKeys:count:)];
     });
 }
 
@@ -79,9 +79,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = NSClassFromString(@"__NSDictionaryM");
-        [class tk_exchangeMethod:@selector(setObject:forKey:) withMethod:@selector(tk_setObject:forKey:)];
-        [class tk_exchangeMethod:@selector(setObject:forKeyedSubscript:) withMethod:@selector(tk_setObject:forKeyedSubscript:)];
-        [class tk_exchangeMethod:@selector(setValue:forKey:) withMethod:@selector(tk_setValue:forKey:)];
+        [class TK_exchangeMethod:@selector(setObject:forKey:) withMethod:@selector(tk_setObject:forKey:)];
+        [class TK_exchangeMethod:@selector(setObject:forKeyedSubscript:) withMethod:@selector(tk_setObject:forKeyedSubscript:)];
+        [class TK_exchangeMethod:@selector(setValue:forKey:) withMethod:@selector(tk_setValue:forKey:)];
     });
 }
 

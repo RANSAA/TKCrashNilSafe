@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  1:处理重复添加，只校验observer和keyPath --该项为默认
  2:处理重复添加，检查所有：observer，keyPath，options，context（手动管理KVO信息）
  **/
-#define kCrashNilSafeCheckKVOAddType    2
+#define kCrashNilSafeCheckKVOAddType    1
 
 
 
@@ -38,12 +38,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  交换对象中的方法
  **/
-+ (BOOL)tk_exchangeMethod:(SEL)origSel withMethod:(SEL)altSel;
++ (BOOL)TK_exchangeMethod:(SEL)origSel withMethod:(SEL)altSel;
 
 /**
  交换类中的方法
  **/
-+ (BOOL)tk_exchangeClassMethod:(SEL)origSel withMethod:(SEL)altSel;
++ (BOOL)TK_exchangeClassMethod:(SEL)origSel withMethod:(SEL)altSel;
 
 
 

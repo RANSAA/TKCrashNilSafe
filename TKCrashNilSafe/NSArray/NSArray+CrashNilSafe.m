@@ -16,11 +16,11 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self tk_exchangeClassMethod:@selector(arrayWithObjects:count:) withMethod:@selector(tk_arrayWithObjects:count:)];
-        [objc_getClass("__NSPlaceholderArray") tk_exchangeMethod:@selector(initWithObjects:count:) withMethod:@selector(tk_initWithObjects:count:)];
+        [self TK_exchangeClassMethod:@selector(arrayWithObjects:count:) withMethod:@selector(tk_arrayWithObjects:count:)];
+        [objc_getClass("__NSPlaceholderArray") TK_exchangeMethod:@selector(initWithObjects:count:) withMethod:@selector(tk_initWithObjects:count:)];
 
-        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
-        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(objectAtIndexedSubscript:) withMethod:@selector(tk_objectAtIndexedSubscript:)];
+        [objc_getClass("__NSArrayM") TK_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
+        [objc_getClass("__NSArrayM") TK_exchangeMethod:@selector(objectAtIndexedSubscript:) withMethod:@selector(tk_objectAtIndexedSubscript:)];
     });
 }
 
@@ -107,7 +107,7 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [objc_getClass("__NSArrayM") tk_exchangeMethod:@selector(insertObject:atIndex:) withMethod:@selector(tk_insertObject:atIndex:)];
+        [objc_getClass("__NSArrayM") TK_exchangeMethod:@selector(insertObject:atIndex:) withMethod:@selector(tk_insertObject:atIndex:)];
     });
 }
 

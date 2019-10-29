@@ -74,7 +74,7 @@
 /**
  交换对象中的方法
  **/
-+ (BOOL)tk_exchangeMethod:(SEL)origSel withMethod:(SEL)altSel
++ (BOOL)TK_exchangeMethod:(SEL)origSel withMethod:(SEL)altSel
 {
     Method origMethod = class_getInstanceMethod(self, origSel);
     Method altMethod = class_getInstanceMethod(self, altSel);
@@ -97,9 +97,9 @@
 /**
  交换类中的方法
  **/
-+ (BOOL)tk_exchangeClassMethod:(SEL)origSel withMethod:(SEL)altSel
++ (BOOL)TK_exchangeClassMethod:(SEL)origSel withMethod:(SEL)altSel
 {
-    return [object_getClass((id)self) tk_exchangeMethod:origSel withMethod:altSel];
+    return [object_getClass((id)self) TK_exchangeMethod:origSel withMethod:altSel];
 }
 
 
@@ -185,13 +185,13 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         //交换KVO添加移出函数
-        [self tk_exchangeMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
-        [self tk_exchangeMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
-        [self tk_exchangeMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
+        [self TK_exchangeMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
+        [self TK_exchangeMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
+        [self TK_exchangeMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
 
         //交换performSelector:
-        [self tk_exchangeMethod:@selector(methodSignatureForSelector:) withMethod:@selector(tk_methodSignatureForSelector:)];
-        [self tk_exchangeMethod:@selector(forwardInvocation:) withMethod:@selector(tk_forwardInvocation:)];
+        [self TK_exchangeMethod:@selector(methodSignatureForSelector:) withMethod:@selector(tk_methodSignatureForSelector:)];
+        [self TK_exchangeMethod:@selector(forwardInvocation:) withMethod:@selector(tk_forwardInvocation:)];
     });
 }
 
