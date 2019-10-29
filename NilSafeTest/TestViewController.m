@@ -28,7 +28,8 @@
 //    [self testDic];
 //    [self testAry];
 //    [self testFuncation];
-    [self testAttrStr];
+//    [self testAttrStr];
+    [self testSet];
 
 }
 
@@ -210,7 +211,7 @@
 - (void)testAttrStr
 {
     NSAttributedString *atr = nil;
-    atr = [[NSAttributedString alloc] initWithString:@"1"];
+    atr = [[NSAttributedString alloc] initWithString:nil];
 //    atr = [[NSAttributedString alloc] initWithAttributedString:atr];
 //    atr = [[NSAttributedString alloc] initWithString:@"2" attributes:nil];
     NSLog(@"atr :%@",atr);
@@ -224,6 +225,23 @@
     NSLog(@"at:%@",at);
 
 }
+
+- (void)testSet
+{
+
+
+//    NSMutableSet *muSet = [[NSMutableSet alloc] init];
+//    muSet = [[NSMutableSet alloc] initWithObjects:nil count:23];
+//    [muSet addObject:nil];
+//    [muSet removeObject:nil];
+
+    NSMutableOrderedSet *or = [[NSMutableOrderedSet alloc] init];
+//    [or objectAtIndex:34];
+
+
+}
+
+
 
 @end
 

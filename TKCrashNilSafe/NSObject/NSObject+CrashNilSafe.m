@@ -188,6 +188,7 @@
         [self TK_exchangeMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(tk_addObserver:forKeyPath:options:context:)];
         [self TK_exchangeMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(tk_removeObserver:forKeyPath:)];
         [self TK_exchangeMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(tk_removeObserver:forKeyPath:context:)];
+        [self TK_exchangeMethod:@selector(observeValueForKeyPath:ofObject:change:context:) withMethod:@selector(tk_observeValueForKeyPath:ofObject:change:context:)];
 
         //交换performSelector:
         [self TK_exchangeMethod:@selector(methodSignatureForSelector:) withMethod:@selector(tk_methodSignatureForSelector:)];
@@ -259,10 +260,6 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     }
 
 
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        NSLog(@"kvo set after:%@",[self getCacheStrogeKVODict]);
-//    });
-
     [self tk_addObserver:observer forKeyPath:keyPath options:options context:context];
 }
 
@@ -298,6 +295,18 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
             NSMutableDictionary *dic = [self getCacheStrogeKVODict];
             [dic removeObjectForKey:cacheKey];
         }
+    }
+}
+
+- (void)tk_observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    @try {
+        [self tk_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    } @catch (NSException *exception) {
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVOobserveValueForKeyPath:ofObject:change:context: 中出现错误，请尽快修改！"];
+        [self noteErrorWithException:exception defaultToDo:tips];
+    } @finally {
+
     }
 }
 
