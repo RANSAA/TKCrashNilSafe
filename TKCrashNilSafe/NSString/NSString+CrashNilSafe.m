@@ -33,7 +33,7 @@
     @try {
         str = [self tk_substringFromIndex:from];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作substringFromIndex:溢出，length:%ld  fromIndex:%ld，请尽快修改！",self.length,from];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> substringFromIndex:溢出，lenght:%ld  fromIndex:%ld",self.length,from];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -47,7 +47,7 @@
     @try {
         str = [self tk_substringWithRange:range];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作substringFromIndex:溢出，lenght:%ld  range.location:%ld  range.length:%ld，请尽快修改！",self.length,range.location,range.length];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> substringFromIndex:溢出，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -60,7 +60,7 @@
     @try {
         str = [self tk_substringToIndex:to];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作substringFromIndex:溢出，lenght:%ld  toIndex:%ld，请尽快修改！",self.length,to];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> substringFromIndex:溢出，lenght:%ld  toIndex:%ld",self.length,to];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -73,7 +73,7 @@
     @try {
         characteristic = [self tk_characterAtIndex:index];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作characterAtIndex:溢出，lenght:%ld  index:%ld, 请尽快修改！",self.length,index];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> characterAtIndex:溢出，lenght:%ld  index:%ld",self.length,index];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return characteristic;
@@ -86,7 +86,7 @@
     @try {
         str = [self tk_stringByReplacingOccurrencesOfString:target withString:replacement options:options range:searchRange];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作stringByReplacingOccurrencesOfString:withString:options:range:错误，lenght:%ld  searchRange.location:%ld  searchRange.length:%ld, 请尽快修改！",self.length,searchRange.location,searchRange.length];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> stringByReplacingOccurrencesOfString:withString:options:range:错误，lenght:%ld  searchRange.location:%ld  searchRange.length:%ld",self.length,searchRange.location,searchRange.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -99,7 +99,7 @@
     @try {
         str = [self tk_stringByReplacingOccurrencesOfString:range withString:replacement];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作stringByReplacingOccurrencesOfString:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld, 请尽快修改！",self.length,range.location,range.length];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> stringByReplacingOccurrencesOfString:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -112,7 +112,7 @@
     @try {
         str = [self tk_stringByReplacingCharactersInRange:range withString:replacement];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作stringByReplacingCharactersInRange:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld, 请尽快修改！",self.length,range.location,range.length];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSString ==> stringByReplacingCharactersInRange:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
         return str;
@@ -140,7 +140,7 @@
     @try {
         [self tk_replaceCharactersInRange:range withString:aString];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作replaceCharactersInRange:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld, 请尽快修改！",self.length,range.location,range.length];
+        NSString *tips = [NSString stringWithFormat:@"NSMutableString ==> replaceCharactersInRange:withString:错误，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
 
@@ -152,7 +152,7 @@
     @try {
         [self tk_insertString:aString atIndex:loc];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作insertString:atIndex:错误，lenght:%ld  atIndex:%ld, 请尽快修改！",self.length,loc];
+        NSString *tips = [NSString stringWithFormat:@"NSMutableString ==> insertString:atIndex:错误，lenght:%ld  atIndex:%ld",self.length,loc];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
     }
@@ -163,7 +163,7 @@
     @try {
         [self tk_deleteCharactersInRange:range];
     }@catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️字符串操作deleteCharactersInRange:错误，lenght:%ld  range.location:%ld  range.length:%ld, 请尽快修改！",self.length,range.location,range.length];
+        NSString *tips = [NSString stringWithFormat:@"NSMutableString ==> deleteCharactersInRange:错误，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
         [self noteErrorWithException:exception defaultToDo:tips];
     }@finally {
     }

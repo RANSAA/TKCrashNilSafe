@@ -116,7 +116,7 @@
     @try {
         [self tk_insertObject:anObject atIndex:index];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️向NSMutableArray中插入数据为nil或者越界。 插入位置:%ld    插入数据:%@，请尽快修改!",index,anObject];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableArray中插入数据为nil或者越界。 插入位置:%ld    插入数据:%@，请尽快修改!",index,anObject];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 

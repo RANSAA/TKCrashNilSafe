@@ -89,7 +89,7 @@
     @try {
         [self tk_setObject:anObject forKey:aKey];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary setObject:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",anObject,aKey];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary ==> setObject:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",anObject,aKey];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 
@@ -100,7 +100,7 @@
     @try {
         [self tk_setObject:obj forKeyedSubscript:key];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary setObject:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",key,obj];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary ==> setObject:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",key,obj];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 
@@ -112,7 +112,7 @@
     @try {
         [self tk_removeObjectForKey:aKey];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary tk_removeObjectForKey时出现空值nil值，请尽快修改！对应的Key：%@",aKey];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary ==> removeObjectForKey时出现空值nil值，请尽快修改！对应的Key：%@",aKey];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 
@@ -124,7 +124,7 @@
     @try {
         [self tk_setValue:value forKey:key];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary setValue:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",key,value];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSDictionary ==> setValue:时出现空值nil值，请尽快修改！对应的Key-Value：k:%@ v:%@",key,value];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 

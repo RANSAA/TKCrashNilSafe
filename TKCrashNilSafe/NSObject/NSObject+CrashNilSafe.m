@@ -57,11 +57,6 @@
     return des;
 }
 
-//- (void)dealloc
-//{
-//    CrashNilSafeLog(@"dealloc CrashNilSafeKVOCache");
-//}
-
 @end
 
 
@@ -102,6 +97,27 @@
     return [object_getClass((id)self) TK_exchangeMethod:origSel withMethod:altSel];
 }
 
+/**
++ (void)miSwizzleInstanceMethod:(Class)class
+                       swizzSel:(SEL)originSel
+                  toSwizzledSel:(SEL)swizzledSel
+{
+    Method originMethod   =  class_getInstanceMethod(class, originSel);
+    Method swizzledMethod =  class_getInstanceMethod(class, swizzledSel);
+    BOOL didAddMethod = class_addMethod(class,
+                                        originSel,
+                                        method_getImplementation(swizzledMethod),
+                                        method_getTypeEncoding(swizzledMethod));
+    if (didAddMethod) {
+        class_replaceMethod(class,
+                            swizzledSel,
+                            method_getImplementation(originMethod),
+                            method_getTypeEncoding(originMethod));
+    }else{
+        method_exchangeImplementations(originMethod, swizzledMethod);
+    }
+}
+**/
 
 #pragma mark 捕获异常出现位置及其相关错误信息
 /**
@@ -211,7 +227,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
 - (void)tk_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
     if (!observer || !keyPath) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO添加时observer与keyPath不能为nil，observer:%@  keyPath:%@  请尽快修改！",observer,keyPath];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO添加时observer与keyPath不能为nil，observer:%@  keyPath:%@",observer,keyPath];
         [self noteErrorWithException:nil defaultToDo:tips];
         return;
     }
@@ -230,7 +246,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
                 }
             }
             if (isRepeat) {
-                NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO请不要重复添加监听，observer:%@  keyPath:%@  options:%ld  context:%@  请尽快修改！",[observer class],keyPath,options,context];
+                NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO请不要重复添加监听，observer:%@  keyPath:%@  options:%ld  context:%@",[observer class],keyPath,options,context];
                 [self noteErrorWithException:nil defaultToDo:tips];
                 return;
             }
@@ -251,7 +267,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
             isRepeat = YES;
         }
         if (isRepeat) {//重复，不添加
-            NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO请不要重复添加监听，observer:%@  keyPath:%@  options:%ld  context:%@  请尽快修改！",[observer class],keyPath,options,context];
+            NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO请不要重复添加监听，observer:%@  keyPath:%@  options:%ld  context:%@",[observer class],keyPath,options,context];
             [self noteErrorWithException:nil defaultToDo:tips];
             return;
         }else{
@@ -268,7 +284,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     @try {
         [self tk_removeObserver:observer forKeyPath:keyPath];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO键值移出时出现错误，请尽快修改！"];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO键值移出时出现错误，请不要重复移出！"];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
         if (kCrashNilSafeCheckKVOAddType == 2){
@@ -284,7 +300,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     @try {
         [self tk_removeObserver:observer forKeyPath:keyPath context:context];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO键值移出时出现错误，请尽快修改！"];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO键值移出时出现错误，请不要重复移出！"];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
         if (kCrashNilSafeCheckKVOAddType == 2){
@@ -303,7 +319,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     @try {
         [self tk_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     } @catch (NSException *exception) {
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVOobserveValueForKeyPath:ofObject:change:context: 中出现错误，请尽快修改！"];
+        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️KVO ==> observeValueForKeyPath:ofObject:change:context:中出现错误"];
         [self noteErrorWithException:exception defaultToDo:tips];
     } @finally {
 
@@ -319,7 +335,7 @@ static NSMutableDictionary *cacheStrogeKVODict = nil;
     if (sig) {
         return sig;
     }
-    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️unrecognized selector找不到对应的方法,找不到的方法为: %@ ，请尽快修改！",NSStringFromSelector(aSelector)];
+    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️==> unrecognized selector找不到对应的方法,找不到的方法为: %@",NSStringFromSelector(aSelector)];
     [self noteErrorWithException:nil defaultToDo:tips];
     return [NSMethodSignature signatureWithObjCTypes:@encode(void)];
 }

@@ -28,7 +28,7 @@
         [self tk_setObject:obj forKey:key];
         return;
     }
-    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSCache setObject:forKey:错误， obj:%@  key:%@，请尽快修改！",obj,key];
+    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSCache ==> setObject:forKey:错误， obj:%@  key:%@",obj,key];
     [self noteErrorWithException:nil defaultToDo:tips];
 }
 
@@ -38,7 +38,7 @@
         [self tk_setObject:obj forKey:key cost:g];
         return;
     }
-    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSCache setObject:forKey:cost:错误， obj:%@  key:%@  cost:%ld，请尽快修改！",obj,key,g];
+    NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSCache ==> setObject:forKey:cost:错误， obj:%@  key:%@  cost:%ld",obj,key,g];
     [self noteErrorWithException:nil defaultToDo:tips];
 }
 

@@ -28,8 +28,8 @@
 //    [self testDic];
 //    [self testAry];
 //    [self testFuncation];
-//    [self testAttrStr];
-    [self testSet];
+    [self testAttrStr];
+//    [self testSet];
 
 }
 
@@ -210,34 +210,60 @@
 
 - (void)testAttrStr
 {
-    NSAttributedString *atr = nil;
-    atr = [[NSAttributedString alloc] initWithString:nil];
-//    atr = [[NSAttributedString alloc] initWithAttributedString:atr];
-//    atr = [[NSAttributedString alloc] initWithString:@"2" attributes:nil];
-    NSLog(@"atr :%@",atr);
+//    NSAttributedString *atr = nil;
+//    atr = [[NSAttributedString alloc] initWithString:nil];
+//    atr = [[NSAttributedString alloc] initWithAttributedString:@""];
+//    atr = [[NSAttributedString alloc] initWithString:@"11" attributes:nil];
+//    NSLog(@"atr :%@",atr);
 
     NSMutableAttributedString *at = nil;
 //    at = [[NSMutableAttributedString alloc] initWithString:nil];
     at = [[NSMutableAttributedString alloc] initWithString:@"xxx" attributes:nil];
-//    at = [[NSMutableAttributedString alloc] initWithAttributedString:@""];
-    NSLog(@"at:%@",at);
-    [at replaceCharactersInRange:NSMakeRange(0, 3) withString:@"34547457457"];
+    at = [[NSMutableAttributedString alloc] initWithAttributedString:@""];
+//    NSLog(@"at:%@",at);
+//    [at replaceCharactersInRange:NSMakeRange(0, 3) withString:@"34547457457"];
     NSLog(@"at:%@",at);
 
 }
 
 - (void)testSet
 {
+    id ary[] = {@"44",@"344"};
+    NSSet *set = nil;
+//    set = [NSSet set];
+    set = [NSSet setWithObjects:@"123", nil];
+//    set = [NSSet setWithArray:nil];
+    NSLog(@"set:%@",set);
 
-
-//    NSMutableSet *muSet = [[NSMutableSet alloc] init];
-//    muSet = [[NSMutableSet alloc] initWithObjects:nil count:23];
+    NSMutableSet *muSet = [[NSMutableSet alloc] init];
+//    muSet = [[NSMutableSet alloc] initWithObjects:nil count:1];
 //    [muSet addObject:nil];
 //    [muSet removeObject:nil];
 
-    NSMutableOrderedSet *or = [[NSMutableOrderedSet alloc] init];
+
+//    NSMutableOrderedSet * or = nil;
+//    or = [[NSMutableOrderedSet alloc] init];
+//    or = [[NSMutableOrderedSet alloc] initWithObjects:ary count:3];
 //    [or objectAtIndex:34];
 
+    id strOR = nil;
+    NSOrderedSet *ordd = nil;
+    ordd = [[NSOrderedSet alloc] initWithObjects:@"22",@"222", nil];
+    strOR = [ordd objectAtIndex:1];
+    NSLog(@"strOr:%@",strOR);
+
+    NSMutableOrderedSet *cc = nil;
+    cc = [[NSMutableOrderedSet alloc] initWithObjects:@"22",@"222", nil];
+    strOR =[cc objectAtIndex:1];
+//    [cc insertObject:@"rr" atIndex:4];
+//    [cc removeObjectAtIndex:1];
+//    [cc addObject:nil];
+//    [cc replaceObjectAtIndex:2 withObject:@"9527"];
+//    [cc setObject:@"999" atIndex:3];
+    [cc setObject:@"999" atIndexedSubscript:3];
+
+
+    NSLog(@"cc:%@",cc);
 
 }
 

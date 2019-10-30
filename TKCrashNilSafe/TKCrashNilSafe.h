@@ -6,7 +6,11 @@
 //  Copyright © 2019 mac. All rights reserved.
 //
 
-//: https://github.com/lsmakethebest/LSSafeProtector/tree/master/LSSafeProtector/Foundation
+/**
+ other:
+ https://github.com/lsmakethebest/LSSafeProtector/tree/master/LSSafeProtector/Foundation
+ https://github.com/mediaios/safe-app
+ **/
 
 #ifndef TKCrashNilSafe_h
 #define TKCrashNilSafe_h
