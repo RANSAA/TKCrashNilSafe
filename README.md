@@ -2,6 +2,7 @@
 ### 简介
 防止NSArray，NSDictionary，,KVO重复移出，unrecognized selectord等错误操作引起的奔溃问题。
 \
+查看：https://github.com/jasenhuang/NSObjectSafe
 \
 PS:
 \
