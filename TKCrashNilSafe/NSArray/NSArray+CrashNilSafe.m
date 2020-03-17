@@ -19,6 +19,7 @@
         [self TK_exchangeClassMethod:@selector(arrayWithObjects:count:) withMethod:@selector(tk_arrayWithObjects:count:)];
         [objc_getClass("__NSPlaceholderArray") TK_exchangeMethod:@selector(initWithObjects:count:) withMethod:@selector(tk_initWithObjects:count:)];
 
+        [objc_getClass("__NSArray0") TK_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
         [objc_getClass("__NSArrayM") TK_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
         [objc_getClass("__NSArrayM") TK_exchangeMethod:@selector(objectAtIndexedSubscript:) withMethod:@selector(tk_objectAtIndexedSubscript:)];
     });

@@ -188,10 +188,10 @@
     CrashNilSafeLog(@"%@",logErrorMessage);
 
     //CrashNilSafe 上报信息
-    NSDictionary *crashInfo = @{@"crashInfo":crashInfoStr};
+    NSDictionary *crashInfo = @{@"error":crashInfoStr};
     //将错误信息放在字典里，用通知的形式发送出去
 //    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCrashNilSafeNotification object:nil userInfo:crashInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTKCrashNilSafeCheckNotification object:nil userInfo:crashInfo];
 //    });
 
 }

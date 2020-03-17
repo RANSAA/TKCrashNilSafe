@@ -25,4 +25,11 @@
 #import "NSCache+CrashNilSafe.h"
 
 
+/**
+ 添加通知h可以获取具体异常信息：
+ 
+ #define kTKCrashNilSafeCheckNotification  @"kTKCrashNilSafeCheckNotification"
+ 
+ */
+
 #endif /* TKCrashNilSafe_h */

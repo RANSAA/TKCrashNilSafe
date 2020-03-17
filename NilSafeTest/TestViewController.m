@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifacuion:) name:kCrashNilSafeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notifacuion:) name:kTKCrashNilSafeCheckNotification object:nil];
 
 
 //    [self testDic];

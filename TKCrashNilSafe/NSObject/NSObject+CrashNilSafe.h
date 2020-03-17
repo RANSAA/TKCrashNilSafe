@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  如果要收集异常日志，请监听该通知,提取（crashInfo）信息
  **/
-#define kCrashNilSafeNotification  @"kCrashNilSafeNotification"
+#define kTKCrashNilSafeCheckNotification  @"kTKCrashNilSafeCheckNotification"
 
 /**
  KVO重复添加处理控制宏，可以根据需求设置对应模式
