@@ -6,14 +6,14 @@
 //  Copyright © 2019 mac. All rights reserved.
 //
 
-/**
- 优化策略不是太好
- **/
-
 #import <Foundation/Foundation.h>
-#import "NSObject+CrashNilSafe.h"
+
+/**
+ 字符串判断时，一般只判断是否为nil， 而不进行字符串的类型判断
+ */
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface NSAttributedString (CrashNilSafe)
 

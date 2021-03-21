@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "TKCrashNilSafe.h"
+
 
 @interface AppDelegate ()
 
@@ -17,7 +19,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(crashNotfi:) name:kTKCrashNilSafeReceiveNotification object:nil];
+//    NSString *a= nil;
+//    NSString *b= nil;
+//    NSLog(@"a=b -> :%d",[a isEqualToString:b]);
+    
     return YES;
+}
+
+- (void)crashNotfi:(NSNotification *)notif
+{
+    NSLog(@"noti:\n%@",notif.userInfo[kTKCrashNilSafeReceiveCrashInfoKey]);
 }
 
 

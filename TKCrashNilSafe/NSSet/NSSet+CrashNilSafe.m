@@ -8,6 +8,7 @@
 
 #import "NSSet+CrashNilSafe.h"
 #import <objc/runtime.h>
+#import "TKCrashNilSafe.h"
 
 
 @implementation NSSet (CrashNilSafe)
@@ -20,31 +21,33 @@
 
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        Class class = objc_getClass("__NSSetM");
-        [class TK_exchangeMethod:@selector(addObject:) withMethod:@selector(tk_addObject:)];
-        [class TK_exchangeMethod:@selector(removeObject:) withMethod:@selector(tk_removeObject:)];
-    });
-}
-
-- (void)tk_addObject:(id)object
-{
-    if (object) {
-        [self tk_addObject:object];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableSet ==> addObject: 不能为nil"];
-        [self noteErrorWithException:nil defaultToDo:tips];
+    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class class = objc_getClass("__NSSetM");
+            [class exchangeObjMethod:@selector(addObject:) withMethod:@selector(safe_addObject:)];
+            [class exchangeObjMethod:@selector(removeObject:) withMethod:@selector(safe_removeObject:)];
+        });
     }
 }
 
-- (void)tk_removeObject:(id)object
+- (void)safe_addObject:(id)object
 {
     if (object) {
-        [self tk_removeObject:object];
+        [self safe_addObject:object];
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableSet ==> removeObject: 不能为nil"];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ addObject:] ==> object cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_removeObject:(id)object
+{
+    if (object) {
+        [self safe_removeObject:object];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ removeObject:] ==> key cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
@@ -57,103 +60,166 @@
 
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        Class orderedSetI = NSClassFromString(@"__NSOrderedSetI");
-        [orderedSetI TK_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_objectAtIndex:)];
-    });
+    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class class = NSClassFromString(@"__NSOrderedSetI");
+            [class exchangeObjMethod:@selector(objectAtIndex:) withMethod:@selector(safe_objectAtIndex:)];
+        });
+    }
 }
 
-- (id)tk_objectAtIndex:(NSUInteger)index
+- (id)safe_objectAtIndex:(NSUInteger)index
 {
     if (index < self.count) {
-        return [self tk_objectAtIndex:index];
+        return [self safe_objectAtIndex:index];
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSOrderedSet ==> objectAtIndex: 越界，count:%ld  index:%ld",self.count,index];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ objectAtIndex:] ==> index %lu, But count %lu",self.class,index,self.count];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
         return nil;
     }
 }
 
 @end
 
+
 @implementation NSMutableOrderedSet (CrashNilSafe)
 
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        Class class = NSClassFromString(@"__NSOrderedSetM");
-        [class TK_exchangeMethod:@selector(objectAtIndex:) withMethod:@selector(tk_mu_objectAtIndex:)];
-        [class TK_exchangeMethod:@selector(addObject:) withMethod:@selector(tk_addObject:)];
-        [class TK_exchangeMethod:@selector(insertObject:atIndex:) withMethod:@selector(tk_insertObject:atIndex:)];
-        [class TK_exchangeMethod:@selector(removeObjectAtIndex:) withMethod:@selector(tk_removeObjectAtIndex:)];
-        [class TK_exchangeMethod:@selector(replaceObjectAtIndex:withObject:) withMethod:@selector(tk_replaceObjectAtIndex:withObject:)];
-        [class TK_exchangeMethod:@selector(setObject:atIndex:) withMethod:@selector(tk_setObject:atIndex:)];
-    });
-}
-
-- (id)tk_mu_objectAtIndex:(NSUInteger)index
-{
-    if (index < self.count) {
-        return [self tk_mu_objectAtIndex:index];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==> objectAtIndex: 越界，count:%ld  index:%ld",self.count,index];
-        [self noteErrorWithException:nil defaultToDo:tips];
-        return nil;
+    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class class = NSClassFromString(@"__NSOrderedSetM");
+            [class exchangeObjMethod:@selector(objectAtIndex:) withMethod:@selector(safe_objectAtIndex:)];
+            [class exchangeObjMethod:@selector(addObject:) withMethod:@selector(safe_addObject:)];
+            [class exchangeObjMethod:@selector(insertObject:atIndex:) withMethod:@selector(safe_insertObject:atIndex:)];
+            [class exchangeObjMethod:@selector(setObject:atIndex:) withMethod:@selector(safe_setObject:atIndex:)];
+            
+            [class exchangeObjMethod:@selector(removeObjectAtIndex:) withMethod:@selector(safe_removeObjectAtIndex:)];
+            [class exchangeObjMethod:@selector(removeObjectsInRange:) withMethod:@selector(safe_removeObjectsInRange:)];
+            [class exchangeObjMethod:@selector(removeObjectsInArray:) withMethod:@selector(safe_removeObjectsInArray:)];
+            [class exchangeObjMethod:@selector(removeObjectsAtIndexes:) withMethod:@selector(safe_removeObjectsAtIndexes:)];
+            
+            [class exchangeObjMethod:@selector(replaceObjectAtIndex:withObject:) withMethod:@selector(safe_replaceObjectAtIndex:withObject:)];
+            [class exchangeObjMethod:@selector(exchangeObjectAtIndex:withObjectAtIndex:) withMethod:@selector(safe_exchangeObjectAtIndex:withObjectAtIndex:)];
+            
+        });
     }
 }
 
-- (void)tk_insertObject:(id)anObject atIndex:(NSUInteger)index
-{
-    if (anObject && index<self.count+1) {
-        [self tk_insertObject:anObject atIndex:index];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==> insertObject:atIndex:错误，object:%@  maxIndex:%ld  index:%ld",anObject,self.count,index];
-        [self noteErrorWithException:nil defaultToDo:tips];
-    }
-}
 
-- (void)tk_removeObjectAtIndex:(NSUInteger)index
-{
-    if (index<self.count) {
-        [self tk_removeObjectAtIndex:index];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==>  removeObjectAtIndex:越界， maxIndex:%ld  index:%ld",self.count-1,index];
-        [self noteErrorWithException:nil defaultToDo:tips];
-    }
-}
-
-- (void)tk_addObject:(id)object
+- (void)safe_addObject:(id)object
 {
     if (object) {
-        [self tk_addObject:object];
+        [self safe_addObject:object];
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==> addObject:错误,object不能为nil"];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ addObject:] ==> object cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
-- (void)tk_setObject:(id)obj atIndex:(NSUInteger)idx
+
+- (void)safe_insertObject:(id)anObject atIndex:(NSUInteger)index
 {
-    if (obj && idx<self.count+1) {
-        [self tk_setObject:obj atIndex:idx];
+    if (anObject) {
+        if (index <= self.count) {
+            [self safe_insertObject:anObject atIndex:index];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ insertObject:atIndex:] ==> atIndex %lu, But the bounds [0 .. %lu]",self.class,index,self.count];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==> setObject:atIndex:错误, object:%@  maxIndex:%ld  AtIndex:%ld",obj,self.count,idx];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ insertObject:] ==> object cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
-- (void)tk_replaceObjectAtIndex:(NSUInteger)index withObject:(id)object
+- (void)safe_setObject:(id)obj atIndex:(NSUInteger)idx
 {
-    if (index<self.count && object) {
-        [self tk_replaceObjectAtIndex:index withObject:object];
+    if (obj) {
+        if (idx>self.count) {
+            NSString *reason = [NSString stringWithFormat:@"-[%@ setObject:atIndex:] ==> index %lu, But the bounds [0 .. %lu]",self.class,idx,self.count];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }else{
+            [self safe_setObject:obj atIndex:idx];
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableOrderedSet ==> replaceObjectAtIndex:withObject:错误, object:%@  maxIndex:%ld  AtIndex:%ld",object,self.count-1,index];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ setObject:atIndex:] ==> object cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
+
+- (void)safe_removeObjectAtIndex:(NSUInteger)index
+{
+    if (index<self.count) {
+        [self safe_removeObjectAtIndex:index];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ removeObjectAtIndex:] ==> index %lu, But the count %lu",self.class,index,self.count];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_removeObjectsInRange:(NSRange)range
+{
+    if (TKSafeMaxRange(range) <= self.count) {
+        [self safe_removeObjectsInRange:range];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ removeObjectsInRange:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.count];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_removeObjectsInArray:(NSArray *)otherArray
+{
+    if (otherArray) {
+        if ([otherArray isKindOfClass:NSArray.class]) {
+            [self safe_removeObjectsInArray:otherArray];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ removeObjectsInArray:] ==> The value type added must be NSArray; The current type is:%@",self.class,otherArray.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }
+}
+
+- (void)safe_removeObjectsAtIndexes:(NSIndexSet *)indexes
+{
+    if (indexes.lastIndex < self.count) {
+        [self safe_removeObjectsAtIndexes:indexes];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ removeObjectsAtIndexes:] ==> indexes.lastIndex %lu, But count %lu",self.class,indexes.lastIndex,self.count];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+
+
+- (void)safe_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
+{
+    if (anObject) {
+        if (index<self.count) {
+            [self safe_replaceObjectAtIndex:index withObject:anObject];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ replaceObjectAtIndex:withObject:] ==> index %lu, But the count %lu",self.class,index,self.count];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ replaceObjectAtIndex:withObject:] ==> object cannot be nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_exchangeObjectAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2
+{
+    NSUInteger count = self.count;
+    if (idx1<count && idx2 < count) {
+        [self safe_exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ exchangeObjectAtIndex:withObjectAtIndex:] ==> index1:%lu index2:%lu, But the count %lu",self.class,idx1,idx2,count];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
 
 
 @end

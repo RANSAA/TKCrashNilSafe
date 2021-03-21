@@ -1,52 +1,70 @@
 # TKCrashNilSafe
-### 简介
-防止NSArray，NSDictionary，,KVO重复移出，unrecognized selectord等错误操作引起的奔溃问题。
-\
-查看：https://github.com/jasenhuang/NSObjectSafe
-\
-PS:
-\
-   该项目能够捕获大部分的异常信息，并且可以进行放置程序崩溃，与腾讯的Bugly不同，Bugly是收集奔溃信息，但不会进行处理。而当前项目回进行补救处理，但是并不是最优的方法，只是起到一个程序出错时，简单的异常处理。正确的做法是，需要用户根据这些提示信息进行修改！
-\
-\
-如何获取异常信息：
-\
-            通过添加通知：kTKCrashNilSafeCheckNotification即可获取异常信息，提取通知信息中的：error 字段即可获取。
-            \
-            
+### 功能介绍
+解决iOS因数据异常，unrecognized selectord等错误而引起的Crash奔溃处理工具。
 
-### 用法
->直接使用：
-\
-> pod 'TKCrashNilSafe'
-\
-导入项目中即可。
-\
-也可以按照需求模块引入，使用:
-\
-> pod 'TKCrashNilSafe/xxxx'
+### 配置
+TKCrashNilSafe的功能是处理一些列Crash引起的奔溃问题，引起Crash的原因主要是数据错误，所以并不能正真解决数据错误问题。\
+所以：
 >
+    Relese:模式模式下不用说肯定要开启的。
+    
+    Debug:模式下建议关闭TKCrashNilSafe功能，这要才可以在开发中解决这些crash问题，手动开启/关闭。
+关闭方法：
 >
+    可在info.plist文件中添加key:"TKCrashNilSafeSwitchDebug"  ==> YES开启，NO关闭    
 
-### KVO
-在使用KVO防Crash时，稍微注意下，即处理重复添加keyPath时，有多重模式。
-\
-可以根据需求修改类型，文件：NSObject+CrashNilSafe.h
+### 使用说明
+默认情况直接导入本框架即可，如果需要其它设置直接导入下列文件，查看其中的说明即可：
 ```
-
-/**
-KVO重复添加处理控制宏，可以根据需求设置对应模式
-0:不处理重复添加
-1:处理重复添加，只校验observer和keyPath --该项为默认
-2:处理重复添加，检查所有：observer，keyPath，options，context（手动管理KVO信息）
-**/
-
-#define kCrashNilSafeCheckKVOAddType    1
-
+#import "TKCrashNilSafe.h"
 ```
+可以通过添加通获取到Crash信息：
+>
+    通知名称:
+    kTKCrashNilSafeReceiveNotification    
 
-### 注意：
-容器类通过initWithObjects:count:创建对象时，不能完全避免Carch，用户可以在使用之前，先进行条件判断。
+    对应userInfo.key:
+    kTKCrashNilSafeReceiveCrashInfoKey   
+处理设置防KVO重复添加，删除引起Crash的safe模式:
+>
+    typedef NS_ENUM(NSUInteger, TKCrashSafeKVOType)
+    {
+          TKCrashSafeKVOTypeCache = 0, //使用缓存KVO信息处理Crash问题
+          TKCrashSafeKVOTypeTry   = 1, //使用try crash的方式处理KVO Crash问题
+          TKCrashSafeKVOTypeOff   = 2, //不使用KVO Crash Safe功能
+    };
+
+Crash日志类型，级别越高处理堆栈信息越耗时间:
+>
+    typedef NS_ENUM(NSUInteger, TKCrashNilSafeLogType){
+        TKCrashNilSafeLogTypeOff             = 0, //关闭
+        TKCrashNilSafeLogTypeSimple          = 1, //只解析异常信息
+        TKCrashNilSafeLogTypeCallStackSimple = 2, //解析异常信息，并且处理堆栈信息定位到Crash位置，Default
+        TKCrashNilSafeLogTypeCallStackFull   = 3, //解析异常信息，并且处理堆栈信息定位到Crash位置,并且将精简信息追加到CallStack数据的头部
+    };
+
+### 导入
+ 
+全部导入:
+>
+    pod 'TKCrashNilSafe'
+
+按需导入:
+>
+    pod 'TKCrashNilSafe/KVC'
+    pod 'TKCrashNilSafe/KVO'
+    pod 'TKCrashNilSafe/Selector'
+    pod 'TKCrashNilSafe/NSArray'
+    pod 'TKCrashNilSafe/NSDictionary'
+    pod 'TKCrashNilSafe/NSSet'
+    pod 'TKCrashNilSafe/NSString'
+    pod 'TKCrashNilSafe/NSAttributedString'
+    pod 'TKCrashNilSafe/NSJSONSerialization'
+    pod 'TKCrashNilSafe/NSData'
+    pod 'TKCrashNilSafe/NSCache'
+    
 
 
+### 参考
+1. https://github.com/jasenhuang/NSObjectSafe
 

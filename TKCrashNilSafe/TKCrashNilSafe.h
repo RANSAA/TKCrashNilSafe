@@ -15,14 +15,17 @@
 #ifndef TKCrashNilSafe_h
 #define TKCrashNilSafe_h
 
-#import "NSObject+CrashNilSafe.h"
-#import "NSDictionary+CrashNilSafe.h"
-#import "NSArray+CrashNilSafe.h"
-#import "NSSet+CrashNilSafe.h"
-#import "NSString+CrashNilSafe.h"
-#import "NSAttributedString+CrashNilSafe.h"
-#import "NSData+CrashNilSafe.h"
-#import "NSCache+CrashNilSafe.h"
+//#import "NSObject+CrashNilSafe.h"
+//#import "NSDictionary+CrashNilSafe.h"
+//#import "NSArray+CrashNilSafe.h"
+//#import "NSSet+CrashNilSafe.h"
+//#import "NSString+CrashNilSafe.h"
+//#import "NSAttributedString+CrashNilSafe.h"
+//#import "NSData+CrashNilSafe.h"
+//#import "NSCache+CrashNilSafe.h"
+
+#import "NSObject+TKSafeCore.h"
+
 
 
 /**

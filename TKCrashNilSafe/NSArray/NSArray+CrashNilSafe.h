@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSObject+CrashNilSafe.h"
 
+
+/**
+ 其它：
+   -[replaceObjectsAtIndexes: withObjects:]这个判断函数条件比较严谨，在使用时用户要注意自行判断
+ */
 
 NS_ASSUME_NONNULL_BEGIN
 

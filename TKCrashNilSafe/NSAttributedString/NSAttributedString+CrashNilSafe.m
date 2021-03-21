@@ -8,83 +8,86 @@
 
 #import "NSAttributedString+CrashNilSafe.h"
 #import <objc/runtime.h>
+#import "TKCrashNilSafe.h"
 
 
 @implementation NSAttributedString (CrashNilSafe)
 
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-//        Class class = objc_getClass("NSConcreteAttributedString");
-        Class class = NSClassFromString(@"NSConcreteAttributedString");
-        [class TK_exchangeMethod:@selector(initWithString:) withMethod:@selector(tk_initWithString:)];
-        [class TK_exchangeMethod:@selector(initWithAttributedString:) withMethod:@selector(tk_initWithAttributedString:)];
-        [class TK_exchangeMethod:@selector(initWithString:attributes:) withMethod:@selector(tk_initWithString:attributes:)];
-    });
+    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class class = objc_getClass("NSConcreteAttributedString");
+            [class exchangeObjMethod:@selector(initWithString:) withMethod:@selector(safe_initWithString:)];
+            [class exchangeObjMethod:@selector(initWithString:attributes:) withMethod:@selector(safe_initWithString:attributes:)];
+            [class exchangeObjMethod:@selector(initWithAttributedString:) withMethod:@selector(safe_initWithAttributedString:)];
+            [class exchangeObjMethod:@selector(attributedSubstringFromRange:) withMethod:@selector(safe_attributedSubstringFromRange:)];
+        });
+    }
 }
 
-- (instancetype)tk_initWithString:(NSString *)str
+- (instancetype)safe_initWithString:(NSString *)str
 {
-    id object = nil;
-//    @try {
-//        object = [self tk_initWithString:str];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithString:失败， str不能为nil,且类型应该为NSString； classType:%@  attrStr:%@,  请尽快修改！",str.class,str];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
-
-    if (str && [str isKindOfClass:NSString.class]) {
-        object = [self tk_initWithString:str];
+    if (str) {
+        if ([str isKindOfClass:NSString.class]) {
+            return [self safe_initWithString:str];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ initWithString:] ==> The value type added must be NSString; The current type is:%@",self.class,str.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            return  nil;
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithString:错误，str不能为nil,且类型应该为NSString； classType:%@  str:%@",str.class,str];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ initWithString:] ==> nil argument",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        return  nil;
     }
-    return object;
 }
 
-- (instancetype)tk_initWithAttributedString:(NSAttributedString *)attrStr
+- (instancetype)safe_initWithAttributedString:(NSAttributedString *)attrStr
 {
-    id object = nil;
-//    @try {
-//        object = [self tk_initWithAttributedString:attrStr];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithAttributedString:失败， attrStr不能为nil,且类型应该为NSAttributedString； classType:%@  attrStr:%@,  请尽快修改！",attrStr.class,attrStr];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
-
-
-    if (attrStr && [attrStr isKindOfClass:NSAttributedString.class]) {
-        object = [self tk_initWithAttributedString:attrStr];
+    if (attrStr) {
+        if ([attrStr isKindOfClass:NSAttributedString.class]) {
+            return  [self safe_initWithAttributedString:attrStr];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ initWithAttributedString:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrStr.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            return nil;
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithAttributedString:错误，attrStr不能为nil,且类型应该为NSAttributedString； classType:%@  attrStr:%@",attrStr.class,attrStr];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ initWithAttributedString:] ==> nil argument",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        return  nil;
     }
-    return object;
 }
 
-- (instancetype)tk_initWithString:(NSString *)str attributes:(NSDictionary<NSString *,id> *)attrs {
-    id object = nil;
-//    @try {
-//        object = [self tk_initWithString:str attributes:attrs];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithString:attributes:失败， str不能为nil,且类型应该为NSString； classType:%@  attrStr:%@,  请尽快修改！",str.class,str];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
 
-    if (str && [str isKindOfClass:NSString.class]) {
-        object = [self tk_initWithString:str attributes:attrs];
+//不检测attrs
+- (instancetype)safe_initWithString:(NSString *)str attributes:(NSDictionary<NSString *,id> *)attrs {
+    if (str) {
+        if ([str isKindOfClass:NSString.class]) {
+            return [self safe_initWithString:str attributes:attrs];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ initWithString:attributes:] ==> The value type added must be NSString; The current type is:%@",self.class,str.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            return nil;
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSAttributedString ==> initWithString:attributes:失败， str不能为nil,且类型应该为NSString； classType:%@  str:%@,  请尽快修改！",str.class,str];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ initWithString:attributes:] ==> nil argument",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        return nil;
     }
-    return object;
+}
+
+- (NSAttributedString *)safe_attributedSubstringFromRange:(NSRange)range
+{
+    if (TKSafeMaxRange(range) <= self.length) {
+        return [self safe_attributedSubstringFromRange:range];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ attributedSubstringFromRange:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.length];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        return nil;
+    }
 }
 
 @end
@@ -94,94 +97,212 @@
 
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-//        Class class = objc_getClass("NSConcreteMutableAttributedString");
-        Class class = NSClassFromString(@"NSConcreteMutableAttributedString");
-        [class TK_exchangeMethod:@selector(initWithString:) withMethod:@selector(tk_mutable_initWithString:)];
-        [class TK_exchangeMethod:@selector(initWithString:attributes:) withMethod:@selector(tk_mutable_initWithString:attributes:)];
-        [class TK_exchangeMethod:@selector(replaceCharactersInRange:withString:) withMethod:@selector(tk_replaceCharactersInRange:withString:)];
-    });
-}
-
-
-- (instancetype)tk_mutable_initWithString:(NSString *)str
-{
-    id object = nil;
-//    @try {
-//        object = [self tk_mutable_initWithString:str];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithString:失败， str不能为nil,且类型应该为NSString； classType:%@  attrStr:%@",str.class,str];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
-
-    if (str && [str isKindOfClass:NSString.class]) {
-        object = [self tk_mutable_initWithString:str];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithString:错误， str不能为nil,且类型应该为NSString； classType:%@  str:%@",str.class,str];
-        [self noteErrorWithException:nil defaultToDo:tips];
+    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class class = objc_getClass("NSConcreteMutableAttributedString");
+            
+            [class exchangeObjMethod:@selector(initWithString:) withMethod:@selector(safe_initWithString:)];
+            [class exchangeObjMethod:@selector(initWithString:attributes:) withMethod:@selector(safe_initWithString:attributes:)];
+            [class exchangeObjMethod:@selector(initWithAttributedString:) withMethod:@selector(safe_initWithAttributedString:)];
+            [class exchangeObjMethod:@selector(attributedSubstringFromRange:) withMethod:@selector(safe_attributedSubstringFromRange:)];
+ 
+            [class exchangeObjMethod:@selector(replaceCharactersInRange:withString:) withMethod:@selector(safe_replaceCharactersInRange:withString:)];
+            [class exchangeObjMethod:@selector(setAttributes:range:) withMethod:@selector(safe_setAttributes:range:)];
+            
+            [class exchangeObjMethod:@selector(addAttribute:value:range:) withMethod:@selector(safe_addAttribute:value:range:)];
+            [class exchangeObjMethod:@selector(addAttributes:range:) withMethod:@selector(safe_addAttributes:range:)];
+            [class exchangeObjMethod:@selector(removeAttribute:range:) withMethod:@selector(safe_removeAttribute:range:)];
+            [class exchangeObjMethod:@selector(replaceCharactersInRange:withAttributedString:) withMethod:@selector(safe_replaceCharactersInRange:withAttributedString:)];
+            [class exchangeObjMethod:@selector(insertAttributedString:atIndex:) withMethod:@selector(safe_insertAttributedString:atIndex:)];
+            [class exchangeObjMethod:@selector(appendAttributedString:) withMethod:@selector(safe_appendAttributedString:)];
+            [class exchangeObjMethod:@selector(deleteCharactersInRange:) withMethod:@selector(safe_deleteCharactersInRange:)];
+            [class exchangeObjMethod:@selector(setAttributedString:) withMethod:@selector(safe_setAttributedString:)];
+        });
     }
-    return object;
 }
 
-- (instancetype)tk_mutable_initWithString:(NSString *)str attributes:(NSDictionary<NSString *,id> *)attrs {
-    id object = nil;
-//    @try {
-//        object = [self tk_mutable_initWithString:str attributes:attrs];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithString:attributes:失败， str不能为nil,且类型应该为NSString； classType:%@  attrStr:%@",str.class,str];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
-
-    if (str && [str isKindOfClass:NSString.class]) {
-        object = [self tk_mutable_initWithString:str attributes:attrs];
-    }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithString:attributes:错误， str不能为nil,且类型应该为NSString； classType:%@  str:%@",str.class,str];
-        [self noteErrorWithException:nil defaultToDo:tips];
-    }
-    return object;
-}
-
-- (instancetype)tk_mutable_initWithAttributedString:(NSAttributedString *)attrStr
+//这儿有点特殊，与NSAttributedString有区别
+- (instancetype)safe_initWithAttributedString:(NSAttributedString *)attrStr
 {
-    id object = nil;
-
-//    @try {
-//        object = [self tk_mutable_initWithAttributedString:attrStr];
-//    } @catch (NSException *exception) {
-//        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithAttributedString:失败， str不能为nil,且类型应该为NSAttributedString； classType:%@  attrStr:%@",attrStr.class,attrStr];
-//        [self noteErrorWithException:exception defaultToDo:tips];
-//    } @finally {
-//        return object;
-//    }
-
-    if (attrStr && [attrStr isKindOfClass:NSAttributedString.class]) {
-        object = [self tk_mutable_initWithAttributedString:attrStr];
+    if (attrStr) {
+        if ([attrStr isKindOfClass:NSAttributedString.class]) {
+            return  [self safe_initWithAttributedString:attrStr];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ initWithAttributedString:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrStr.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            return nil;
+        }
     }else{
-        NSString *tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> initWithAttributedString:错误，str不能为nil,且类型应该为NSAttributedString； classType:%@  attrStr:%@",attrStr.class,attrStr];
-        [self noteErrorWithException:nil defaultToDo:tips];
+        //与NSAttributedString有区别
+        return  [self safe_initWithAttributedString:attrStr];
     }
-    return object;
 }
 
-- (void)tk_replaceCharactersInRange:(NSRange)range withString:(NSString *)str
+
+- (void)safe_replaceCharactersInRange:(NSRange)range withString:(NSString *)str
 {
-    NSString *tips = nil;
-    if (range.location+range.length>self.length) {
-        tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> replaceCharactersInRange:withString：越界，lenght:%ld  range.location:%ld  range.length:%ld",self.length,range.location,range.length];
-        [self noteErrorWithException:nil defaultToDo:tips];
-        return;
-    }else if (!str){
-        tips = [NSString stringWithFormat:@"⚠️⚠️NSMutableAttributedString ==> replaceCharactersInRange:withString：错误，str不能为nil"];
-        [self noteErrorWithException:nil defaultToDo:tips];
-        return;
+    if (str) {
+        if (TKSafeMaxRange(range) <= self.length) {
+            if ([str isKindOfClass:NSString.class]) {
+                [self safe_replaceCharactersInRange:range withString:str];
+            }else{
+                NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withString:] ==> The value type added must be NSString; The current type is:%@",self.class,str.class];
+                [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            }
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withString:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
     }else{
-        [self tk_replaceCharactersInRange:range withString:str];
+        NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withString:] ==> nil argument",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_setAttributes:(NSDictionary<NSAttributedStringKey,id> *)attrs range:(NSRange)range
+{
+    if (TKSafeMaxRange(range) <= self.length) {
+        [self safe_setAttributes:attrs range:range];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ setAttributes:range:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.length];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_addAttribute:(NSAttributedStringKey)name value:(id)value range:(NSRange)range
+{
+    if (!name || !value) {
+        NSString *reason = [NSString stringWithFormat:@"-[%@ addAttribute:value:range:] ==> name connot nil",self.class];
+        if (name) {
+            reason = [NSString stringWithFormat:@"-[%@ addAttribute:value:range:] ==> value connot nil",self.class];
+        }
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }else{
+        NSUInteger length = self.length;
+        if (TKSafeMaxRange(range) <= length) {
+            [self safe_addAttribute:name value:value range:range];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ addAttribute:value:range:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }
+}
+
+
+- (void)safe_addAttributes:(NSDictionary<NSAttributedStringKey,id> *)attrs range:(NSRange)range
+{
+    if (attrs) {
+        NSUInteger length = self.length;
+        if (TKSafeMaxRange(range) <= length) {
+            [self safe_addAttributes:attrs range:range];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ addAttributes:range:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ addAttributes:range:] ==> attrs connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_removeAttribute:(NSAttributedStringKey)name range:(NSRange)range
+{
+    if (name) {
+        NSUInteger length = self.length;
+        if (TKSafeMaxRange(range) <= length) {
+            [self safe_removeAttribute:name range:range];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ removeAttribute:range:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ removeAttribute:range:] ==> name connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString
+{
+    if (attrString) {
+        if (TKSafeMaxRange(range) <= self.length) {
+            if ([attrString isKindOfClass:NSAttributedString.class]) {
+                [self safe_replaceCharactersInRange:range withAttributedString:attrString];
+            }else{
+                NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withAttributedString:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrString.class];
+                [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            }
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withAttributedString:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ replaceCharactersInRange:withAttributedString:] ==> attrString connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_insertAttributedString:(NSAttributedString *)attrString atIndex:(NSUInteger)loc
+{
+    if (attrString) {
+        if (loc <= self.length) {
+            if ([attrString isKindOfClass:NSAttributedString.class]) {
+                [self safe_insertAttributedString:attrString atIndex:loc];
+            }else{
+                NSString *reason = [NSString stringWithFormat:@"-[%@ insertAttributedString:atIndex:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrString.class];
+                [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+            }
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ rinsertAttributedString:atIndex:] ==> atIndex %lu, But the bounds [0 .. %lu]",self.class,loc,self.length];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ insertAttributedString:atIndex:] ==> attrString connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_appendAttributedString:(NSAttributedString *)attrString
+{
+    if (attrString) {
+        if ([attrString isKindOfClass:NSAttributedString.class]) {
+            [self safe_appendAttributedString:attrString];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ appendAttributedString:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrString.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ appendAttributedString:] ==> attrString connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_deleteCharactersInRange:(NSRange)range
+{
+    if (TKSafeMaxRange(range) <= self.length) {
+        [self safe_deleteCharactersInRange:range];
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ deleteCharactersInRange:] ==> inRange %@, But the bounds [0 .. %lu]",self.class,NSStringFromRange(range),self.length];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+    }
+}
+
+- (void)safe_setAttributedString:(NSAttributedString *)attrString
+{
+    if (attrString) {
+        if ([attrString isKindOfClass:NSAttributedString.class]) {
+            [self safe_setAttributedString:attrString];
+        }else{
+            NSString *reason = [NSString stringWithFormat:@"-[%@ setAttributedString:] ==> The value type added must be NSAttributedString; The current type is:%@",self.class,attrString.class];
+            [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
+        }
+    }else{
+        NSString *reason = [NSString stringWithFormat:@"-[%@ setAttributedString:] ==> attrString connot nil",self.class];
+        [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
 @end
+
+
+

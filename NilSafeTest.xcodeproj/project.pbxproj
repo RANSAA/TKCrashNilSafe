@@ -8,12 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		04444BBB235569C800711375 /* NSString+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BBA235569C800711375 /* NSString+CrashNilSafe.m */; };
-		04444BBF235575AA00711375 /* NSAttributedString+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */; };
 		04444BC32355760900711375 /* NSSet+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BC22355760900711375 /* NSSet+CrashNilSafe.m */; };
 		04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04444BCA235578B500711375 /* NSCache+CrashNilSafe.m */; };
 		0481308C2366C00F008FECB4 /* VC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0481308B2366C00F008FECB4 /* VC2.m */; };
 		048558DC234F2E9800C84640 /* NSArray+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */; };
-		048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */; };
 		048558DE234F2E9800C84640 /* NSDictionary+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */; };
 		04AD157523692E3C007430BD /* NSData+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AD157423692E3C007430BD /* NSData+CrashNilSafe.m */; };
 		04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D1BD202339AFF2004D9BF8 /* AppDelegate.m */; };
@@ -22,13 +20,18 @@
 		04D1BD292339AFF3004D9BF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD282339AFF3004D9BF8 /* Assets.xcassets */; };
 		04D1BD2C2339AFF3004D9BF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D1BD2A2339AFF3004D9BF8 /* LaunchScreen.storyboard */; };
 		04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D1BD2E2339AFF3004D9BF8 /* main.m */; };
+		3F08B68B26033DF600326382 /* TKCrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F08B68A26033DF600326382 /* TKCrashNilSafe.m */; };
+		3F280E0A25FF5488006C20FC /* NSAttributedString+CrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F280E0825FF5488006C20FC /* NSAttributedString+CrashNilSafe.m */; };
+		3F4E659A25FCA6E700C822D3 /* NSObject+TKSafeCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4E659925FCA6E700C822D3 /* NSObject+TKSafeCore.m */; };
+		3F4E65A025FCC25B00C822D3 /* NSObject+Selector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4E659F25FCC25B00C822D3 /* NSObject+Selector.m */; };
+		3F7303E8260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7303E7260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.m */; };
+		3FEBA94C260350CB0014658F /* NSObject+CrashNilSafeKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA94B260350CB0014658F /* NSObject+CrashNilSafeKVO.m */; };
+		3FEBA950260363EE0014658F /* NSObject+CrashNilSafeKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA94F260363EE0014658F /* NSObject+CrashNilSafeKVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		04444BB9235569C800711375 /* NSString+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+CrashNilSafe.h"; sourceTree = "<group>"; };
 		04444BBA235569C800711375 /* NSString+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+CrashNilSafe.m"; sourceTree = "<group>"; };
-		04444BBD235575AA00711375 /* NSAttributedString+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CrashNilSafe.h"; sourceTree = "<group>"; };
-		04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CrashNilSafe.m"; sourceTree = "<group>"; };
 		04444BC12355760900711375 /* NSSet+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSSet+CrashNilSafe.h"; sourceTree = "<group>"; };
 		04444BC22355760900711375 /* NSSet+CrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSSet+CrashNilSafe.m"; sourceTree = "<group>"; };
 		04444BC9235578B500711375 /* NSCache+CrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSCache+CrashNilSafe.h"; sourceTree = "<group>"; };
@@ -38,8 +41,6 @@
 		048558D2234F2E9700C84640 /* TKCrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCrashNilSafe.h; sourceTree = "<group>"; };
 		048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558D5234F2E9700C84640 /* NSArray+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CrashNilSafe.h"; sourceTree = "<group>"; };
-		048558D7234F2E9700C84640 /* NSObject+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+CrashNilSafe.h"; sourceTree = "<group>"; };
-		048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558DA234F2E9700C84640 /* NSDictionary+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+CrashNilSafe.m"; sourceTree = "<group>"; };
 		048558DB234F2E9700C84640 /* NSDictionary+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+CrashNilSafe.h"; sourceTree = "<group>"; };
 		04AD157323692E3C007430BD /* NSData+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CrashNilSafe.h"; sourceTree = "<group>"; };
@@ -54,6 +55,21 @@
 		04D1BD2B2339AFF3004D9BF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04D1BD2D2339AFF3004D9BF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04D1BD2E2339AFF3004D9BF8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3F08B68926033DF600326382 /* TKCrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKCrashNilSafe.h; sourceTree = "<group>"; };
+		3F08B68A26033DF600326382 /* TKCrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKCrashNilSafe.m; sourceTree = "<group>"; };
+		3F280E0825FF5488006C20FC /* NSAttributedString+CrashNilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CrashNilSafe.m"; sourceTree = "<group>"; };
+		3F280E0925FF5488006C20FC /* NSAttributedString+CrashNilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CrashNilSafe.h"; sourceTree = "<group>"; };
+		3F4E658425FC9EF900C822D3 /* NilSafeTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NilSafeTest.entitlements; sourceTree = "<group>"; };
+		3F4E659825FCA6E700C822D3 /* NSObject+TKSafeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TKSafeCore.h"; sourceTree = "<group>"; };
+		3F4E659925FCA6E700C822D3 /* NSObject+TKSafeCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TKSafeCore.m"; sourceTree = "<group>"; };
+		3F4E659E25FCC25B00C822D3 /* NSObject+Selector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Selector.h"; sourceTree = "<group>"; };
+		3F4E659F25FCC25B00C822D3 /* NSObject+Selector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Selector.m"; sourceTree = "<group>"; };
+		3F7303E6260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+TKCrashNilSafe.h"; sourceTree = "<group>"; };
+		3F7303E7260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+TKCrashNilSafe.m"; sourceTree = "<group>"; };
+		3FEBA94A260350CB0014658F /* NSObject+CrashNilSafeKVO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+CrashNilSafeKVO.h"; sourceTree = "<group>"; };
+		3FEBA94B260350CB0014658F /* NSObject+CrashNilSafeKVO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CrashNilSafeKVO.m"; sourceTree = "<group>"; };
+		3FEBA94E260363EE0014658F /* NSObject+CrashNilSafeKVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+CrashNilSafeKVC.h"; sourceTree = "<group>"; };
+		3FEBA94F260363EE0014658F /* NSObject+CrashNilSafeKVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CrashNilSafeKVC.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,15 +90,6 @@
 				04444BBA235569C800711375 /* NSString+CrashNilSafe.m */,
 			);
 			path = NSString;
-			sourceTree = "<group>";
-		};
-		04444BBC2355758700711375 /* NSAttributedString */ = {
-			isa = PBXGroup;
-			children = (
-				04444BBD235575AA00711375 /* NSAttributedString+CrashNilSafe.h */,
-				04444BBE235575AA00711375 /* NSAttributedString+CrashNilSafe.m */,
-			);
-			path = NSAttributedString;
 			sourceTree = "<group>";
 		};
 		04444BC0235575E700711375 /* NSSet */ = {
@@ -106,14 +113,18 @@
 		048558D1234F2E9700C84640 /* TKCrashNilSafe */ = {
 			isa = PBXGroup;
 			children = (
+				3F4E659225FCA34300C822D3 /* Core */,
+				3FDE9EA726024CA70038FE66 /* KVC */,
+				3FDE9EA826024CAE0038FE66 /* KVO */,
 				048558D3234F2E9700C84640 /* NSArray */,
-				04444BBC2355758700711375 /* NSAttributedString */,
+				3F280E0725FF5488006C20FC /* NSAttributedString */,
 				04444BC82355788800711375 /* NSCache */,
 				04AD157223692E3C007430BD /* NSData */,
 				048558D9234F2E9700C84640 /* NSDictionary */,
-				048558D6234F2E9700C84640 /* NSObject */,
+				3F7303E52606378F006769E8 /* NSJSONSerialization */,
 				04444BC0235575E700711375 /* NSSet */,
 				04444BB52355694D00711375 /* NSString */,
+				3F4E659D25FCC14500C822D3 /* Selector */,
 				048558D2234F2E9700C84640 /* TKCrashNilSafe.h */,
 			);
 			path = TKCrashNilSafe;
@@ -126,15 +137,6 @@
 				048558D4234F2E9700C84640 /* NSArray+CrashNilSafe.m */,
 			);
 			path = NSArray;
-			sourceTree = "<group>";
-		};
-		048558D6234F2E9700C84640 /* NSObject */ = {
-			isa = PBXGroup;
-			children = (
-				048558D7234F2E9700C84640 /* NSObject+CrashNilSafe.h */,
-				048558D8234F2E9700C84640 /* NSObject+CrashNilSafe.m */,
-			);
-			path = NSObject;
 			sourceTree = "<group>";
 		};
 		048558D9234F2E9700C84640 /* NSDictionary */ = {
@@ -174,6 +176,7 @@
 		04D1BD1E2339AFF2004D9BF8 /* NilSafeTest */ = {
 			isa = PBXGroup;
 			children = (
+				3F4E658425FC9EF900C822D3 /* NilSafeTest.entitlements */,
 				048558D1234F2E9700C84640 /* TKCrashNilSafe */,
 				04D1BD1F2339AFF2004D9BF8 /* AppDelegate.h */,
 				04D1BD202339AFF2004D9BF8 /* AppDelegate.m */,
@@ -188,6 +191,62 @@
 				04D1BD2E2339AFF3004D9BF8 /* main.m */,
 			);
 			path = NilSafeTest;
+			sourceTree = "<group>";
+		};
+		3F280E0725FF5488006C20FC /* NSAttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				3F280E0925FF5488006C20FC /* NSAttributedString+CrashNilSafe.h */,
+				3F280E0825FF5488006C20FC /* NSAttributedString+CrashNilSafe.m */,
+			);
+			path = NSAttributedString;
+			sourceTree = "<group>";
+		};
+		3F4E659225FCA34300C822D3 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3F4E659825FCA6E700C822D3 /* NSObject+TKSafeCore.h */,
+				3F4E659925FCA6E700C822D3 /* NSObject+TKSafeCore.m */,
+				3F08B68926033DF600326382 /* TKCrashNilSafe.h */,
+				3F08B68A26033DF600326382 /* TKCrashNilSafe.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		3F4E659D25FCC14500C822D3 /* Selector */ = {
+			isa = PBXGroup;
+			children = (
+				3F4E659E25FCC25B00C822D3 /* NSObject+Selector.h */,
+				3F4E659F25FCC25B00C822D3 /* NSObject+Selector.m */,
+			);
+			path = Selector;
+			sourceTree = "<group>";
+		};
+		3F7303E52606378F006769E8 /* NSJSONSerialization */ = {
+			isa = PBXGroup;
+			children = (
+				3F7303E6260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.h */,
+				3F7303E7260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.m */,
+			);
+			path = NSJSONSerialization;
+			sourceTree = "<group>";
+		};
+		3FDE9EA726024CA70038FE66 /* KVC */ = {
+			isa = PBXGroup;
+			children = (
+				3FEBA94E260363EE0014658F /* NSObject+CrashNilSafeKVC.h */,
+				3FEBA94F260363EE0014658F /* NSObject+CrashNilSafeKVC.m */,
+			);
+			path = KVC;
+			sourceTree = "<group>";
+		};
+		3FDE9EA826024CAE0038FE66 /* KVO */ = {
+			isa = PBXGroup;
+			children = (
+				3FEBA94A260350CB0014658F /* NSObject+CrashNilSafeKVO.h */,
+				3FEBA94B260350CB0014658F /* NSObject+CrashNilSafeKVO.m */,
+			);
+			path = KVO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,7 +275,7 @@
 		04D1BD142339AFF2004D9BF8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = mac;
 				TargetAttributes = {
 					04D1BD1B2339AFF2004D9BF8 = {
@@ -260,16 +319,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F7303E8260637AE006769E8 /* NSJSONSerialization+TKCrashNilSafe.m in Sources */,
 				04D1BD242339AFF2004D9BF8 /* TestViewController.m in Sources */,
-				048558DD234F2E9800C84640 /* NSObject+CrashNilSafe.m in Sources */,
 				04D1BD2F2339AFF3004D9BF8 /* main.m in Sources */,
 				0481308C2366C00F008FECB4 /* VC2.m in Sources */,
 				04444BCB235578B500711375 /* NSCache+CrashNilSafe.m in Sources */,
 				04AD157523692E3C007430BD /* NSData+CrashNilSafe.m in Sources */,
+				3F280E0A25FF5488006C20FC /* NSAttributedString+CrashNilSafe.m in Sources */,
 				04D1BD212339AFF2004D9BF8 /* AppDelegate.m in Sources */,
+				3F4E659A25FCA6E700C822D3 /* NSObject+TKSafeCore.m in Sources */,
 				04444BBB235569C800711375 /* NSString+CrashNilSafe.m in Sources */,
 				048558DC234F2E9800C84640 /* NSArray+CrashNilSafe.m in Sources */,
-				04444BBF235575AA00711375 /* NSAttributedString+CrashNilSafe.m in Sources */,
+				3FEBA950260363EE0014658F /* NSObject+CrashNilSafeKVC.m in Sources */,
+				3FEBA94C260350CB0014658F /* NSObject+CrashNilSafeKVO.m in Sources */,
+				3F4E65A025FCC25B00C822D3 /* NSObject+Selector.m in Sources */,
+				3F08B68B26033DF600326382 /* TKCrashNilSafe.m in Sources */,
 				048558DE234F2E9800C84640 /* NSDictionary+CrashNilSafe.m in Sources */,
 				04444BC32355760900711375 /* NSSet+CrashNilSafe.m in Sources */,
 			);
@@ -323,6 +387,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -382,6 +447,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -413,7 +479,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NilSafeTest/NilSafeTest.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 39E8LG3NH3;
 				INFOPLIST_FILE = NilSafeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -422,6 +492,9 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sayaDev.NilSafeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -430,7 +503,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NilSafeTest/NilSafeTest.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 39E8LG3NH3;
 				INFOPLIST_FILE = NilSafeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -439,6 +516,9 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sayaDev.NilSafeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

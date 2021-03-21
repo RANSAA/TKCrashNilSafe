@@ -9,14 +9,14 @@
 name = "TKCrashNilSafe"
 file_source       = "*.{h,m}"
 file_header       = "*.h"
-public_source     = "TKCrashNilSafe/NSObject/NSObject+CrashNilSafe.{h,m}"
-public_header     = "TKCrashNilSafe/NSObject/NSObject+CrashNilSafe.h"
-public_base       = "TKCrashNilSafe/NSObject"
+public_source     = "#{name}/Core/*.{h,m}"
+public_header     = "#{name}/Core/*.h"
+public_base       = "#{name}/Core"
 
 Pod::Spec.new do |spec|
 
   spec.name         = "TKCrashNilSafe"   #框架名称
-  spec.version      = "1.0"         #版本
+  spec.version      = "1.1"         #版本
   spec.summary      = "防止Crash奔溃问题"          #简短的描述
   spec.description  = <<-DESC
   TKCrashNilSafe
@@ -28,27 +28,40 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true    #支持arc
 
   # spec.platform     = :ios
-  spec.platform     = :ios, "8.0"         #支持版本
+  # spec.platform     = :ios, "8.0"         #支持版本
 
   #  When using multiple platforms
-  # spec.ios.deployment_target = "5.0"
-  # spec.osx.deployment_target = "10.7"
+  spec.ios.deployment_target = "8.0"
+  spec.osx.deployment_target = "10.9"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
 
   # spec.source_files     = public_source,"#{name}/*.*","#{name}/**/*.*"  #源文件路径相关
   # spec.public_header_files = public_header,"#{name}/*.h","#{name}/**/*.h"
 
-  spec.source_files         = "#{name}/TKCrashNilSafe.h"
-  spec.public_header_files  = "#{name}/TKCrashNilSafe.h"
+
+  # spec.source_files         = "#{name}/TKCrashNilSafe.h"
+  # spec.public_header_files  = "#{name}/TKCrashNilSafe.h"
 
   
 
     #分支 
-  spec.subspec 'NSObject' do |ss|
+  spec.subspec 'Core' do |ss|
     ss.source_files         = public_source
     ss.public_header_files  = public_header
     ss.ios.frameworks       = "Foundation"
+  end
+
+  spec.subspec 'KVC' do |ss|
+    ss.source_files         = "#{name}/KVC/#{file_source}"
+    ss.public_header_files  = "#{name}/KVC/#{file_header}"
+    ss.dependency "#{public_base}"    #依赖
+  end
+
+  spec.subspec 'KVO' do |ss|
+    ss.source_files         = "#{name}/KVO/#{file_source}"
+    ss.public_header_files  = "#{name}/KVO/#{file_header}"
+    ss.dependency "#{public_base}"    #依赖
   end
 
   spec.subspec 'NSArray' do |ss|
@@ -81,15 +94,27 @@ Pod::Spec.new do |spec|
     ss.dependency "#{public_base}"    #依赖
   end
 
-  spec.subspec 'NSSet' do |ss|
+  spec.subspec 'NSJSONSerialization' do |ss|
+    ss.source_files         = "#{name}/NSJSONSerialization/#{file_source}"
+    ss.public_header_files  = "#{name}/NSJSONSerialization/#{file_header}"
+    ss.dependency "#{public_base}"    #依赖
+  end
+
+ spec.subspec 'NSSet' do |ss|
     ss.source_files         = "#{name}/NSSet/#{file_source}"
     ss.public_header_files  = "#{name}/NSSet/#{file_header}"
     ss.dependency "#{public_base}"    #依赖
-  end
+  end 
 
   spec.subspec 'NSString' do |ss|
     ss.source_files         = "#{name}/NSString/#{file_source}"
     ss.public_header_files  = "#{name}/NSString/#{file_header}"
+    ss.dependency "#{public_base}"    #依赖
+  end
+
+  spec.subspec 'Selector' do |ss|
+    ss.source_files         = "#{name}/Selector/#{file_source}"
+    ss.public_header_files  = "#{name}/Selector/#{file_header}"
     ss.dependency "#{public_base}"    #依赖
   end
 
