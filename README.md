@@ -65,6 +65,7 @@ Crash日志类型，级别越高处理堆栈信息越耗时间:
     
 
 
-### 参考
-1. https://github.com/jasenhuang/NSObjectSafe
+### 其它
+[NSObjectSafe](https://github.com/jasenhuang/NSObjectSafe)\
+[AvoidCrash](https://github.com/chenfanfang/AvoidCrash)
 
