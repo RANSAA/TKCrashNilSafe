@@ -44,7 +44,10 @@ NSString * const kTKCrashNilSafeReceiveCrashInfoKey     = @"kTKCrashNilSafeRecei
 #endif
     });
     return  isEnabled;
+
 }
+
+
 
 - (BOOL)isAbortDebug
 {

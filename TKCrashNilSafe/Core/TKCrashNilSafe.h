@@ -63,6 +63,9 @@ extern NSString * const kTKCrashNilSafeReceiveCrashInfoKey;
 
 + (instancetype)share;
 
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END
