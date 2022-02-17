@@ -49,6 +49,13 @@ NS_INLINE NSUInteger TKSafeMaxRange(NSRange range)
 /** 交换对象中的方法*/
 + (BOOL)exchangeObjMethod:(SEL)originSel withMethod:(SEL)swizzledSel;
 
+/**
+ 函数交换
+ 交换类中的方法： Class.class
+ 交换对象中的方法: obj.class
+ */
++ (void)swizzleMethod:(Class)class orgSel:(SEL)originSel swizzSel:(SEL)swizzledSel;
+
 
 #pragma mark Crash处理入口方法
 

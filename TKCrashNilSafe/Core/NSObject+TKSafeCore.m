@@ -79,6 +79,35 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
 }
 
 
+/**
+ 函数交换
+ 交换类中的方法： Class.class
+ 交换对象中的方法: obj.class
+ */
++ (void)swizzleMethod:(Class)class orgSel:(SEL)originSel swizzSel:(SEL)swizzledSel
+{
+    Method originaMethod = class_getInstanceMethod(class, originSel);
+    Method swizzleMethod = class_getInstanceMethod(class, swizzledSel);
+
+    if (!originaMethod || !swizzleMethod) {
+      return ;
+    }
+
+
+    class_addMethod(class,
+                  originSel,
+                  class_getMethodImplementation(class, originSel),
+                  method_getTypeEncoding(originaMethod));
+    class_addMethod(class,
+                  swizzledSel,
+                  class_getMethodImplementation(class, swizzledSel),
+                  method_getTypeEncoding(swizzleMethod));
+    method_exchangeImplementations(class_getInstanceMethod(class, originSel),
+                                 class_getInstanceMethod(class, swizzledSel));
+}
+
+
+
 /** 打印crash信息 */
 - (void)TKCrashNilSafLog:(NSString *)str
 {
