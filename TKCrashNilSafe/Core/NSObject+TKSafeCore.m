@@ -7,12 +7,8 @@
 //
 
 #import "NSObject+TKSafeCore.h"
-#import <objc/runtime.h>
 #import "TKCrashNilSafe.h"
-
-
-//static NSString *TKCrashNilSafeExceptionDefault     = @"TKCrashNilSafeExceptionDefault"; //default
-//static NSString *TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionNoAbort"; //该标志下的Crash是不用abort中断的
+#import <objc/runtime.h>
 
 NSString * const TKCrashNilSafeExceptionDefault     = @"TKCrashNilSafeExceptionDefault"; //default
 NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionNoAbort"; //该标志下的Crash是不用abort中断的
@@ -50,8 +46,26 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
     
     
     
-//方式2
-    
+//    //方式二：
+//     /* add selector if not exist, implement append with method */
+//    BOOL didAddMethod = class_addMethod(class,
+//                                        originSel,
+//                                        method_getImplementation(swizzleMethod),
+//                                        method_getTypeEncoding(swizzleMethod));
+//    if (didAddMethod) {
+//        /* replace class instance method, added if selector not exist */
+//        /* for class cluster , it always add new selector here */
+//        class_replaceMethod(class,
+//                            swizzledSel,
+//                            method_getImplementation(originaMethod),
+//                            method_getTypeEncoding(originaMethod));
+//    } else {
+//        /** 交换 **/
+//        method_exchangeImplementations(originaMethod, swizzleMethod);
+//    }
+
+
+//    //方式三（有问题）
 //    /* add selector if not exist, implement append with method */
 //    BOOL didAddMethod = class_addMethod(self,
 //                                        originSel,
@@ -81,10 +95,10 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
 
 /**
  函数交换
- 交换类中的方法： Class.class
- 交换对象中的方法: obj.class
+ 交换类中的方法： Class.class -> self.class
+ 交换对象中的方法: obj.class -> objc_getClass("__NSArrayI");
  */
-+ (void)swizzleMethod:(Class)class orgSel:(SEL)originSel swizzSel:(SEL)swizzledSel
++ (void)swizzleMethod:(Class)class originSel:(SEL)originSel swizzSel:(SEL)swizzledSel
 {
     Method originaMethod = class_getInstanceMethod(class, originSel);
     Method swizzleMethod = class_getInstanceMethod(class, swizzledSel);
@@ -93,31 +107,19 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
       return ;
     }
 
-
+// 方式一：
     class_addMethod(class,
-                  originSel,
-                  class_getMethodImplementation(class, originSel),
-                  method_getTypeEncoding(originaMethod));
+                    originSel,
+                    class_getMethodImplementation(class, originSel),
+                    method_getTypeEncoding(originaMethod));
     class_addMethod(class,
-                  swizzledSel,
-                  class_getMethodImplementation(class, swizzledSel),
-                  method_getTypeEncoding(swizzleMethod));
+                    swizzledSel,
+                    class_getMethodImplementation(class, swizzledSel),
+                    method_getTypeEncoding(swizzleMethod));
     method_exchangeImplementations(class_getInstanceMethod(class, originSel),
-                                 class_getInstanceMethod(class, swizzledSel));
+                                   class_getInstanceMethod(class, swizzledSel));
+
 }
-
-
-
-/** 打印crash信息 */
-- (void)TKCrashNilSafLog:(NSString *)str
-{
-#ifdef DEBUG
-    if (TKCrashNilSafe.share.enabledCrashLog) {
-        printf("%s\n",[str UTF8String]);
-    }
-#endif
-}
-
 
 
 #pragma mark 精简处理crash信息
@@ -131,6 +133,7 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
 {
     //堆栈主要崩溃信息
 //    NSArray *callStackSymbols = [NSThread callStackSymbols];
+//    NSLog(@"callStackSymbols:%@",callStackSymbols);
     
     //mainCallStackSymbolMsg的格式为   +[类名 方法名]  或者 -[类名 方法名]
     __block NSString *mainCallStackSymbolMsg = nil;
@@ -190,24 +193,26 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
         [callStack addObject:[NSString stringWithFormat:@"TK  TKCrashNilSafe                      %@",mark]];
         [callStack addObjectsFromArray:callStackSymbolsArr];
         crashInfo = [NSString stringWithFormat:@"%@",callStack];
+    }else if (type == TKCrashNilSafeLogTypeCallStackOriginal){
+        crashInfo = [NSString stringWithFormat:@"%@",[NSThread callStackSymbols]];
     }
-    [self TKCrashNilSafLog:crashInfo];
-    [self handleAbortDebugWithExceptionName:expName];
+
+    [TKCrashNilSafe TKCrashNilSafeLog:crashInfo];
     [self handleCenterNotificationWitnInfo:crashInfo];
+    [self handleAbortDebugWithExceptionName:expName];
 }
 
 
 
 - (void)handleAbortDebugWithExceptionName:(NSString *)expName
 {
-#ifdef DEBUG
     if (TKCrashNilSafe.share.isAbortDebug) {
         if (![expName isEqualToString:TKCrashNilSafeExceptionNoAbort]) {
             abort();
         }
     }
-#endif
 }
+
 
 - (void)handleCenterNotificationWitnInfo:(NSString *)crashInfo
 {

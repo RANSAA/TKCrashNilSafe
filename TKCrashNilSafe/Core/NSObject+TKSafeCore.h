@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 NS_ASSUME_NONNULL_BEGIN
-
 
 extern NSString * const TKCrashNilSafeExceptionDefault; //default
 extern NSString * const TKCrashNilSafeExceptionNoAbort; //该标志下的Crash是不用abort中断的
@@ -51,10 +48,10 @@ NS_INLINE NSUInteger TKSafeMaxRange(NSRange range)
 
 /**
  函数交换
- 交换类中的方法： Class.class
- 交换对象中的方法: obj.class
+ 交换类中的方法： Class.class -> self.class
+ 交换对象中的方法: obj.class -> objc_getClass("__NSArrayI");
  */
-+ (void)swizzleMethod:(Class)class orgSel:(SEL)originSel swizzSel:(SEL)swizzledSel;
++ (void)swizzleMethod:(Class)class originSel:(SEL)originSel swizzSel:(SEL)swizzledSel;
 
 
 #pragma mark Crash处理入口方法

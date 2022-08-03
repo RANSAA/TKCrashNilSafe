@@ -18,27 +18,41 @@
     Relese模式模式下不用说肯定要开启的。
     Debug模式下建议关闭TKCrashNilSafe功能，这要才可以在开发中解决这些crash问题，手动开启/关闭。
 关闭方法：
-    可在info.plist文件中添加key:"TKCrashNilSafeSwitchDebug"  ==> YES开启，NO关闭
+    TKCrashNilSafe.share.isEnableInDebug   ==> YES开启，NO关闭
     
  */
 
 NS_ASSUME_NONNULL_BEGIN
 
 
-//Crash日志类型，级别越高处理堆栈信息越耗时间
+#define TKCrashNilSafeInitWithNull \
+if (TKCrashNilSafe.share.isCrashInitWithNull) { \
+    return  nil; \
+}else{ \
+    return [self init];\
+}
+
+
+/**
+ Crash日志信息类型
+ */
 typedef NS_ENUM(NSUInteger, TKCrashNilSafeLogType){
     TKCrashNilSafeLogTypeOff             = 0, //关闭
     TKCrashNilSafeLogTypeSimple          = 1, //只解析异常信息
     TKCrashNilSafeLogTypeCallStackSimple = 2, //解析异常信息，并且处理堆栈信息定位到Crash位置，Default
     TKCrashNilSafeLogTypeCallStackFull   = 3, //解析异常信息，并且处理堆栈信息定位到Crash位置,并且将精简信息追加到CallStack数据的头部
+    TKCrashNilSafeLogTypeCallStackOriginal = 4 //未处理的原始Crash堆栈信息
 };
 
-//处理设置防KVO重复添加，删除引起Crash的safe模式
-typedef NS_ENUM(NSUInteger, TKCrashSafeKVOType)
+
+/**
+ 处理防止KVO重复添加、删除引起Crash时的safe处理模式。
+ */
+typedef NS_ENUM(NSUInteger, TKCrashNilSafeKVOType)
 {
-    TKCrashSafeKVOTypeCache = 0, //使用缓存KVO信息处理Crash问题
-    TKCrashSafeKVOTypeTry   = 1, //使用try crash的方式处理KVO Crash问题
-    TKCrashSafeKVOTypeOff   = 2, //不使用KVO Crash Safe功能
+    TKCrashNilSafeKVOTypeCache = 0, //使用缓存KVO信息处理Crash问题, Default
+    TKCrashNilSafeKVOTypeTry   = 1, //使用try crash的方式处理KVO Crash问题
+    TKCrashNilSafeKVOTypeOff   = 2, //不使用KVO Crash Safe功能
 };
 
 
@@ -50,21 +64,52 @@ extern NSString * const kTKCrashNilSafeReceiveCrashInfoKey;
 
 
 @interface TKCrashNilSafe : NSObject
+
 /**
- 功能:从info.plist文件中检测是否开启TKCrachNilSafe
- Relese模式:默认开启，并且不可修改
- Debug 模式:默认开启，可在info.plist文件中添加key:"TKCrashNilSafeSwitchDebug"  ==> YES开启，NO关闭
+ 在Debug模式下是否开启TKCrachNilSafe安全功能。默认YES。
+ 如果设置为NO,则在Debug模式下整个框架将无效。
+ 注意：需要在turnOnCrashNilSafe(函数交换之前)之前设置，才会生效。
  */
-@property (nonatomic, assign, readonly) BOOL checkCrashNilSafeSwitch;
+@property (nonatomic, assign) BOOL isEnableInDebug;
 @property (nonatomic, assign) BOOL isAbortDebug;//在Debug模式下出现Crash时是否开启Abort()进行程序终端，default NO
 @property (nonatomic, assign) BOOL enabledCrashLog;//是否在控制台中开启Crash信息, default YES
 @property (nonatomic, assign) TKCrashNilSafeLogType crashLogType;//crash日志类型
-@property (nonatomic, assign) TKCrashSafeKVOType safeKVOType;//default TKCrashSafeKVOCache
+@property (nonatomic, assign) TKCrashNilSafeKVOType safeKVOType;//default TKCrashNilSafeKVOCache
+/**
+ 对象在使用initWithXX初始化方法出现crash时，返回null还是返回[self init]初始化的对象（即： 直接使用init初始化的空对象）.
+ YES: return nil //会有内存泄露风险
+ NO: return [self init]  //default
+ */
+@property (nonatomic, assign) BOOL isCrashInitWithNull;
+
 
 + (instancetype)share;
+/** 打印crash信息 */
++ (void)TKCrashNilSafeLog:(NSString *)str;
+
+/**
+ 开启TKCrashNilSafe安全交换功能。
+ 说明：如果某个类不需要实现安全函数交换功能，可以再执行一次交换函数操作来还原。
+ 例如：禁用NSArray的的安全交换功能，可执行一次如下操作：
+ SEL selector = NSSelectorFromString(@"TKCrashNilSafe_SwapMethod");
+ if ([NSArray respondsToSelector:selector]) {
+     [NSArray performSelector:selector];
+ }
 
 
+ //KVC，KVO，Selector三种类型的交换函数入口稍有不同：
+ //KVC
+ SEL selector_kvc = NSSelectorFromString(@"TKCrashNilSafe_SwapMethod_KVC");
+ //KVO
+ SEL selector_kvo = NSSelectorFromString(@"TKCrashNilSafe_SwapMethod_KVO");
+ //Selector
+ SEL selector_selector = NSSelectorFromString(@"TKCrashNilSafe_SwapMethod_Selector");
 
+ if ([NSObject respondsToSelector:selector_XXX]) {
+     [NSObject performSelector:selector_XXX];
+ }
+ */
+- (void)turnOnCrashNilSafe;
 
 @end
 

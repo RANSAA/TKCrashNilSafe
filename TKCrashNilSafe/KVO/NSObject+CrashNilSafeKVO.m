@@ -244,26 +244,29 @@
 @end
 
 
+//MARK: - KVO函数交换
 @implementation NSObject (CrashNilSafeKVO)
 
-+ (void)load
+/**
+ 函数交换通用入口
+ */
++ (void)TKCrashNilSafe_SwapMethod_KVO
 {
-    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            //交换KVO添加移出函数
-            [self exchangeObjMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(safe_addObserver:forKeyPath:options:context:)];
-            [self exchangeObjMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(safe_removeObserver:forKeyPath:context:)];
-            [self exchangeObjMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(safe_removeObserver:forKeyPath:)];
-        });
+    if (!TKCrashNilSafe.share.isEnableInDebug) {
+        return;
     }
+
+    //交换KVO添加移出函数
+    [self exchangeObjMethod:@selector(addObserver:forKeyPath:options:context:) withMethod:@selector(TKCrashNilSafe_addObserver:forKeyPath:options:context:)];
+    [self exchangeObjMethod:@selector(removeObserver: forKeyPath: context:) withMethod:@selector(TKCrashNilSafe_removeObserver:forKeyPath:context:)];
+    [self exchangeObjMethod:@selector(removeObserver: forKeyPath:) withMethod:@selector(TKCrashNilSafe_removeObserver:forKeyPath:)];
 }
 
 
-- (void)safe_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+- (void)TKCrashNilSafe_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
-    TKCrashSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
-    if (type == TKCrashSafeKVOTypeCache) {
+    TKCrashNilSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
+    if (type == TKCrashNilSafeKVOTypeCache) {
         TKSafeKVOModel *model = [[TKSafeKVOModel alloc] initWithObject:self observer:observer keyPath:keyPath options:options context:context];
         if (model.effective) {
             //在缓存中查询是否有相同的对象
@@ -271,34 +274,34 @@
                 NSString *mask = [NSString stringWithFormat:@"-[%@ addObserver:forKeyPath:options:context:] ==> KVO already exists, object:%@ keyPath:%@  context:%@",self.class,self,keyPath,context];
                 [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:mask];
             }else{
-                [self safe_addObserver:observer forKeyPath:keyPath options:options context:context];
+                [self TKCrashNilSafe_addObserver:observer forKeyPath:keyPath options:options context:context];
                 [TKSafeKVOCache.share addObject:model];
             }
         }else{
             NSString *mask = [NSString stringWithFormat:@"-[%@ addObserver:forKeyPath:options:context:] ==> Invalid KVO, object:%@ keyPath:%@  context:%@",self.class,self,keyPath,context];
             [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:mask];
         }
-    }else if (type == TKCrashSafeKVOTypeTry){
+    }else if (type == TKCrashNilSafeKVOTypeTry){
         @try {
-            [self safe_addObserver:observer forKeyPath:keyPath options:options context:context];
+            [self TKCrashNilSafe_addObserver:observer forKeyPath:keyPath options:options context:context];
         } @catch (NSException *exception) {
             [self handleErrorWithName:exception.name mark:exception.reason];
         } @finally {
         }
     }else{
-        [self safe_addObserver:observer forKeyPath:keyPath options:options context:context];
+        [self TKCrashNilSafe_addObserver:observer forKeyPath:keyPath options:options context:context];
     }
 }
 
-- (void)safe_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context
+- (void)TKCrashNilSafe_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context
 {
 //    NSLog(@"data begin:%@",TKSafeKVOCache.share.data);
-    TKCrashSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
-    if (type == TKCrashSafeKVOTypeCache) {
+    TKCrashNilSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
+    if (type == TKCrashNilSafeKVOTypeCache) {
         TKSafeKVOModel *model = [[TKSafeKVOModel alloc] initWithQuearyObject:self observer:observer keyPath:keyPath context:context];
         if (model.effective) {
             if ([TKSafeKVOCache.share quearyRemoveInContextWith:model context:context]) {
-                [self safe_removeObserver:observer forKeyPath:keyPath context:context];
+                [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath context:context];
             }else{
                 NSString *mask = [NSString stringWithFormat:@"-[%@ removeObserver:forKeyPath:context:] ==> KVO not exist, object:%@ keyPath:%@ context:%@",self.class,self,keyPath,context];
                 [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:mask];
@@ -307,16 +310,16 @@
             NSString *mask = [NSString stringWithFormat:@"-[%@ removeObserver:forKeyPath:context:] ==> Invalid KVO, object:%@ keyPath:%@ context:%@",self.class,self,keyPath,context];
             [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:mask];
         }
-    }else if (type == TKCrashSafeKVOTypeTry){
+    }else if (type == TKCrashNilSafeKVOTypeTry){
         @try {
-            [self safe_removeObserver:observer forKeyPath:keyPath context:context];
+            [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath context:context];
         } @catch (NSException *exception) {
             [self handleErrorWithName:exception.name mark:exception.reason];
         } @finally {
             
         }
     }else{
-        [self safe_removeObserver:observer forKeyPath:keyPath context:context];
+        [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath context:context];
     }
 }
 
@@ -324,15 +327,15 @@
  1.应该先查询incontext标记的数据
  2.再查询该数据
  */
-- (void)safe_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
+- (void)TKCrashNilSafe_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
 {
-    TKCrashSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
-    if (type == TKCrashSafeKVOTypeCache) {
+    TKCrashNilSafeKVOType type = TKCrashNilSafe.share.safeKVOType;
+    if (type == TKCrashNilSafeKVOTypeCache) {
         TKSafeKVOModel *model = [[TKSafeKVOModel alloc] initWithQuearyObject:self observer:observer keyPath:keyPath context:nil];
         if (model.effective) {
             TKSafeKVOModel *traget = [TKSafeKVOCache.share quearyRemoveWith:model];
             if (traget) {
-                [self safe_removeObserver:observer forKeyPath:keyPath];
+                [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath];
                 [TKSafeKVOCache.share removeObject:traget];
             }else{
                 NSString *mask = [NSString stringWithFormat:@"-[%@ removeObserver:forKeyPath:] ==> KVO not exist, object:%@ keyPath:%@",self.class,self,keyPath];
@@ -343,16 +346,16 @@
             [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:mask];
         }
 //        NSLog(@"caches data:%@",TKSafeKVOCache.share.data);
-    }else if (type == TKCrashSafeKVOTypeTry){
+    }else if (type == TKCrashNilSafeKVOTypeTry){
         @try {
-            [self safe_removeObserver:observer forKeyPath:keyPath];
+            [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath];
         } @catch (NSException *exception) {
             [self handleErrorWithName:exception.name mark:exception.reason];
         } @finally {
             
         }
     }else{
-        [self safe_removeObserver:observer forKeyPath:keyPath];
+        [self TKCrashNilSafe_removeObserver:observer forKeyPath:keyPath];
     }
 }
 

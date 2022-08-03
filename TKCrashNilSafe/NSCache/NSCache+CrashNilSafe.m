@@ -14,32 +14,35 @@
 
 @implementation NSCache (CrashNilSafe)
 
-+ (void)load
+
+/**
+ 函数交换通用入口
+ */
++ (void)TKCrashNilSafe_SwapMethod
 {
-    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            Class class = objc_getClass("NSCache");
-            [class exchangeObjMethod:@selector(setObject:forKey:) withMethod:@selector(safe_setObject:forKey:)];
-            [class exchangeObjMethod:@selector(setObject:forKey:cost:) withMethod:@selector(safe_setObject:forKey:cost:)];
-        });
+    if (!TKCrashNilSafe.share.isEnableInDebug) {
+        return;
     }
+
+    Class class = objc_getClass("NSCache");
+    [class exchangeObjMethod:@selector(setObject:forKey:) withMethod:@selector(TKCrashNilSafe_setObject:forKey:)];
+    [class exchangeObjMethod:@selector(setObject:forKey:cost:) withMethod:@selector(TKCrashNilSafe_setObject:forKey:cost:)];
 }
 
-- (void)safe_setObject:(id)obj forKey:(id)key
+- (void)TKCrashNilSafe_setObject:(id)obj forKey:(id)key
 {
     if(key && obj){
-        [self safe_setObject:obj forKey:key];
+        [self TKCrashNilSafe_setObject:obj forKey:key];
     }else{
         NSString *reason = [NSString stringWithFormat:@"-[%@ setObject:forKey:] ==>  nil argument",self.class];
         [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];
     }
 }
 
-- (void)safe_setObject:(id)obj forKey:(id)key cost:(NSUInteger)g
+- (void)TKCrashNilSafe_setObject:(id)obj forKey:(id)key cost:(NSUInteger)g
 {
     if (key && obj) {
-        [self safe_setObject:obj forKey:key cost:g];
+        [self TKCrashNilSafe_setObject:obj forKey:key cost:g];
     }else{
         NSString *reason = [NSString stringWithFormat:@"-[%@ setObject:forKey:cost:] ==>  nil argument",self.class];
         [self handleErrorWithName:TKCrashNilSafeExceptionDefault mark:reason];

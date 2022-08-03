@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSSet (CrashNilSafe)
-
-@end
+//@interface NSSet (CrashNilSafe)
+//
+//@end
 
 @interface NSMutableSet (CrashNilSafe)
 

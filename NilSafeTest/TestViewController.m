@@ -495,6 +495,7 @@
     atr = [[NSAttributedString alloc] initWithString:k];
     atr = [[NSAttributedString alloc] initWithString:v];
     atr = [[NSAttributedString alloc] initWithString:num];
+    NSLog(@"atr num test:%@",atr);
     atr = [[NSAttributedString alloc] initWithAttributedString:k];
     atr = [[NSAttributedString alloc] initWithAttributedString:v];
     atr = [[NSAttributedString alloc] initWithAttributedString:num];
@@ -1143,7 +1144,7 @@
 
 - (void)testKVO
 {
-    [TKCrashNilSafe.share setSafeKVOType:TKCrashSafeKVOTypeCache];
+    [TKCrashNilSafe.share setSafeKVOType:TKCrashNilSafeKVOTypeCache];
 
     //    [self removeObserver:self forKeyPath:@"er"];
 //        [self addObserver:self forKeyPath:@"key1" options:NSKeyValueObservingOptionOld context:@"123"];

@@ -16,7 +16,7 @@ public_base       = "#{name}/Core"
 Pod::Spec.new do |spec|
 
   spec.name         = "TKCrashNilSafe"   #框架名称
-  spec.version      = "1.1"         #版本
+  spec.version      = "1.2"         #版本
   spec.summary      = "防止Crash奔溃问题"          #简短的描述
   spec.description  = <<-DESC
   TKCrashNilSafe

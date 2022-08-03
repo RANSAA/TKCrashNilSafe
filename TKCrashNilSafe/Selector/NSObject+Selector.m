@@ -13,19 +13,22 @@
 @implementation NSObject (Selector)
 
 
-+ (void)load
+/**
+ 函数交换通用入口
+ */
++ (void)TKCrashNilSafe_SwapMethod_Selector
 {
-    if (TKCrashNilSafe.share.checkCrashNilSafeSwitch) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self exchangeObjMethod:@selector(methodSignatureForSelector:) withMethod:@selector(safe_methodSignatureForSelector:)];
-            [self exchangeObjMethod:@selector(forwardInvocation:) withMethod:@selector(safe_forwardInvocation:)];
-        });
+    if (!TKCrashNilSafe.share.isEnableInDebug) {
+        return;
     }
+
+    [self exchangeObjMethod:@selector(methodSignatureForSelector:) withMethod:@selector(TKCrashNilSafe_methodSignatureForSelector:)];
+    [self exchangeObjMethod:@selector(forwardInvocation:) withMethod:@selector(TKCrashNilSafe_forwardInvocation:)];
 }
 
-- (NSMethodSignature *)safe_methodSignatureForSelector:(SEL)aSelector {
-    NSMethodSignature *sig = [self safe_methodSignatureForSelector:aSelector];
+
+- (NSMethodSignature *)TKCrashNilSafe_methodSignatureForSelector:(SEL)aSelector {
+    NSMethodSignature *sig = [self TKCrashNilSafe_methodSignatureForSelector:aSelector];
     if (sig) {
         return sig;
     }
@@ -36,7 +39,7 @@
     return [NSMethodSignature signatureWithObjCTypes:@encode(void)];
 }
 
-- (void)safe_forwardInvocation:(NSInvocation *)anInvocation {
+- (void)TKCrashNilSafe_forwardInvocation:(NSInvocation *)anInvocation {
     NSUInteger returnLength = [[anInvocation methodSignature] methodReturnLength];
     if (!returnLength) {
         // nothing to do
