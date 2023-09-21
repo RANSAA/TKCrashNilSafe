@@ -15,7 +15,7 @@
 提示：
     TKCrashNilSafe的功能是处理一些列Crash引起的奔溃问题，引起Crash的原因主要是数据错误，所以并不能正真解决数据错误问题。
 所以：
-    Relese模式模式下不用说肯定要开启的。
+    Relese模式下总是开启的。
     Debug模式下建议关闭TKCrashNilSafe功能，这要才可以在开发中解决这些crash问题，手动开启/关闭。
 关闭方法：
     TKCrashNilSafe.share.isEnableInDebug   ==> YES开启，NO关闭

@@ -26,6 +26,10 @@ NSString * const TKCrashNilSafeExceptionNoAbort     = @"TKCrashNilSafeExceptionN
 /** 交换对象中的方法*/
 + (BOOL)exchangeObjMethod:(SEL)originSel withMethod:(SEL)swizzledSel
 {
+    /**
+     类方法和示例方法在获取方法时有一些区别，后面有时间再修改
+     可以参考:https://zhuanlan.zhihu.com/p/513790671
+     */
     Method originaMethod = class_getInstanceMethod(self, originSel);
     Method swizzleMethod = class_getInstanceMethod(self, swizzledSel);
     if (!originaMethod || !swizzleMethod) {
