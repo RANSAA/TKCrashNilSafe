@@ -16,7 +16,7 @@ public_base       = "#{name}/Core"
 Pod::Spec.new do |spec|
 
   spec.name         = "TKCrashNilSafe"   #框架名称
-  spec.version      = "1.2"         #版本
+  spec.version      = "1.3"         #版本
   spec.summary      = "防止Crash奔溃问题"          #简短的描述
   spec.description  = <<-DESC
   TKCrashNilSafe
@@ -49,6 +49,9 @@ Pod::Spec.new do |spec|
   spec.subspec 'Core' do |ss|
     ss.source_files         = public_source
     ss.public_header_files  = public_header
+    ss.resource_bundles = {
+        spec.name => ["#{name}/Core/PrivacyInfo.xcprivacy"]
+    }
     ss.ios.frameworks       = "Foundation"
   end
 
